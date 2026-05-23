@@ -426,15 +426,36 @@ code {
 }
 
 /* ── Light scheme overrides ── */
-[scheme="light"] .docs-header { background: rgba(248,248,252,0.9); }
-[scheme="light"] .code-block  { background: #f4f4f8; color: #1e1e2e; border-color: rgba(0,0,0,0.1); }
-[scheme="light"] .code-block .tag  { color: #166534; }
-[scheme="light"] .code-block .attr { color: #1d4ed8; }
-[scheme="light"] .code-block .val  { color: #7c3aed; }
-[scheme="light"] .code-block .cmt  { color: #94a3b8; }
-[scheme="light"] .code-block .kw   { color: #dc2626; }
-[scheme="light"] .search-modal { background: #f8f8fc; }
-[scheme="light"] .search-input { color: #0f0f13; }
+[scheme="light"] body           { background: #f4f4f8; color: #0f0f13; }
+[scheme="light"] .docs-header   { background: rgba(244,244,248,0.92); }
+[scheme="light"] .docs-sidebar  { background: #f4f4f8; border-right-color: rgba(0,0,0,0.08); }
+[scheme="light"] .docs-main     { background: #f4f4f8; }
+[scheme="light"] .sidebar-link  { color: #0f0f13; }
+[scheme="light"] .sidebar-group-label { color: #0f0f13; }
+[scheme="light"] .docs-logo     { filter: none; }
+[scheme="light"] .divider       { border-color: rgba(0,0,0,0.08); }
+[scheme="light"] .demo-box      { border-color: rgba(0,0,0,0.08); }
+[scheme="light"] .demo-preview  { background: rgba(0,0,0,0.03); }
+[scheme="light"] .demo-label    { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.08); color: #0f0f13; }
+[scheme="light"] .attr-table td { color: #0f0f13; }
+[scheme="light"] .attr-table th { color: #0f0f13; }
+[scheme="light"] .prose-section p  { color: #0f0f13; }
+[scheme="light"] .prose-section li { color: #0f0f13; }
+[scheme="light"] .page-hero p   { color: #0f0f13; }
+[scheme="light"] .callout       { color: #0f0f13; }
+[scheme="light"] .code-block    { background: #1e1e2e; color: #cdd6f4; border-color: rgba(0,0,0,0.12); }
+[scheme="light"] .code-block .tag  { color: #a6e3a1; }
+[scheme="light"] .code-block .attr { color: #89b4fa; }
+[scheme="light"] .code-block .val  { color: #cba6f7; }
+[scheme="light"] .code-block .cmt  { color: #6c7086; }
+[scheme="light"] .code-block .kw   { color: #f38ba8; }
+[scheme="light"] .code-block .fn   { color: #cba6f7; }
+[scheme="light"] .code-block .str  { color: #a6e3a1; }
+[scheme="light"] .code-block .num  { color: #fab387; }
+[scheme="light"] .search-modal  { background: #f4f4f8; border-color: rgba(0,0,0,0.1); }
+[scheme="light"] .search-input  { color: #0f0f13; }
+[scheme="light"] .search-result-item .result-title { color: #0f0f13; }
+[scheme="light"] .copy-btn      { color: #0f0f13; background: rgba(0,0,0,0.06); border-color: rgba(0,0,0,0.12); }
 </style>
 </head>
 <body>
@@ -467,7 +488,7 @@ code {
         <span>Search docs…</span>
         <kbd>⌘K</kbd>
       </div>
-      <button theme-toggle surface="ghost" tone="neutral" density="compact" radius="full" tooltip="Toggle theme" style="font-size:0.8rem;padding:0.3rem 0.6rem">◑</button>
+      <button theme-toggle tooltip="Toggle theme" tooltip-pos="bottom" style="font-size:0.9rem;padding:0.3rem 0.5rem;background:var(--lux-surface-1);border:1px solid var(--lux-border);border-radius:var(--lux-r-full);cursor:pointer;color:var(--lux-fg);transition:background 0.15s">◑</button>
       <a href="index.html" style="font-size:0.8rem;opacity:0.6;padding:0.3rem 0.5rem">Demo →</a>
     </div>
   </header>
@@ -1972,6 +1993,15 @@ function copyCode(btn) {
   });
 }
 window.copyCode = copyCode;
+
+// ── Theme icon sync ───────────────────────────────────────────
+const themeBtn = document.querySelector('[theme-toggle]');
+function syncThemeIcon() {
+  const scheme = document.documentElement.getAttribute('scheme') || 'dark';
+  if (themeBtn) themeBtn.textContent = scheme === 'dark' ? '◑' : '●';
+}
+syncThemeIcon();
+document.addEventListener('lux:theme:change', syncThemeIcon);
 
 // ── Re-run Lux.init for newly visible elements ────────────────
 // (since pages are hidden via display:none)
