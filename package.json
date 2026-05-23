@@ -1,0 +1,44 @@
+{
+  "name": "luxcss",
+  "version": "1.0.0",
+  "description": "Lux — The attribute-first CSS + JS styling library. More powerful than useaura, zero dependencies.",
+  "main": "dist/lux.js",
+  "style": "dist/lux.css",
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "css",
+    "utility",
+    "attribute-first",
+    "styling",
+    "animations",
+    "components",
+    "zero-dependency",
+    "lux",
+    "design-system"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/luxcss"
+  },
+  "homepage": "https://luxcss.dev",
+  "scripts": {
+    "build": "echo 'No build step needed — dist/ is the source'",
+    "prepublishOnly": "npm run build"
+  },
+  "unpkg": "dist/lux.js",
+  "jsdelivr": "dist/lux.js",
+  "exports": {
+    ".": {
+      "style": "./dist/lux.css",
+      "default": "./dist/lux.js"
+    },
+    "./css": "./dist/lux.css",
+    "./js": "./dist/lux.js"
+  }
+}
