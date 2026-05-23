@@ -114,8 +114,7 @@
     .feat-table th { text-align: left; padding: 0.5rem 0.75rem; opacity: 0.5; font-weight: 500; border-bottom: 1px solid var(--lux-border); }
     .feat-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
     .feat-table tr:last-child td { border-bottom: none; }
-    .yes { color: var(--lux-success); }
-    .no  { color: var(--lux-danger); opacity: 0.6; }
+
   </style>
 </head>
 <body>
@@ -126,6 +125,7 @@
   <div class="nav-links">
     <button surface="ghost" tone="primary" density="compact" radius="full"
             smooth-scroll href="#features" style="font-size:0.82rem">Features</button>
+
     <button surface="ghost" tone="primary" density="compact" radius="full"
             smooth-scroll href="#components" style="font-size:0.82rem">Components</button>
     <button surface="ghost" tone="primary" density="compact" radius="full"
@@ -221,76 +221,73 @@
 
 <hr class="divider" />
 
-<!-- ── FEATURES vs AURA ──────────────────────────────────────── -->
+<!-- ── FEATURES ────────────────────────────────────────────────── -->
 <section class="section" id="features">
-  <div class="section-label">Why Lux</div>
-  <h2 text="heading" balance reveal="bottom" style="margin-bottom:2rem;font-family:'Syne',sans-serif;">
-    Everything useaura has.<br>
-    <span text-gradient="sunset">Plus everything it doesn't.</span>
+  <div class="section-label">What's Included</div>
+  <h2 text="heading" balance reveal="bottom" style="margin-bottom:0.75rem;font-family:'Syne',sans-serif;">
+    Everything you need.<br>
+    <span text-gradient="electric">Nothing you don't.</span>
   </h2>
+  <p text="lead" reveal="bottom" reveal-delay="100" style="margin-bottom:2.5rem;opacity:0.6;max-width:540px">
+    200+ attributes covering styling, layout, motion, components, and JS interactions — all from plain HTML.
+  </p>
 
-  <div layout="grid" cols="1" md-cols="2" gap="lg">
-    <div surface="matte" radius="xl" density="spacious" reveal="left" spotlight>
-      <div text="overline" style="margin-bottom:1rem">useaura</div>
-      <div layout="stack" gap="sm">
-        <div layout="row" gap="sm"><span class="yes">✓</span> Surfaces (glass, solid, ghost…)</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Tones & color tokens</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Layout primitives</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Typography scale</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Motion & reveal</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Gradients</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Shimmer & skeleton</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Badges & tooltips</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Form controls</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Scroll snap</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Modals</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Drawers</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Accordion</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Tabs</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Toast notifications</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Confetti</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Cursor trail</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Magnetic buttons</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Typewriter effect</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Ripple effect</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Counter animation</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Spotlight hover</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Stagger children</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Custom cursor</div>
-        <div layout="row" gap="sm"><span class="no">✕</span> Popover</div>
-      </div>
+  <div layout="grid" cols="1" md-cols="2" lg-cols="3" gap="md" stagger="80">
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">🎨</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">11 Surface Types</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">solid, glass, frosted, ghost, matte, neon, outline, raised, ink, aurora, mesh — for every visual moment.</div>
     </div>
 
-    <div surface="neon" tone="primary" radius="xl" density="spacious" reveal="right" spotlight>
-      <div text="overline" style="margin-bottom:1rem;color:var(--lux-primary)">✦ lux</div>
-      <div layout="stack" gap="sm">
-        <div layout="row" gap="sm"><span class="yes">✓</span> Surfaces + <b>ink, raised, aurora, mesh, noise</b></div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Tones & color tokens</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Layout + <b>bento, split, prose, masonry</b></div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Typography + <b>hero, lead, text-stroke, text-glow</b></div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Motion + <b>12 animation types, stagger</b></div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>18 named gradients</b> + text gradients</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Shimmer & skeleton</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Badges (dot, counter, pill) & tooltips (4 pos)</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Form controls + range, select styling</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> Scroll snap + overscroll</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Modal</b> (animated, backdrop blur)</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Drawer</b> (top/right/bottom/left)</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Accordion</b> (multi-open support)</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Tabs</b> (animated panels)</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Toast</b> (4 types, auto-dismiss)</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Confetti</b> (click-origin burst)</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Cursor trail</b> (dots or line)</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Magnetic buttons</b></div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Typewriter</b> (loop, cursor)</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Ripple effect</b></div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Counter animation</b> (scroll-triggered)</div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Spotlight hover</b></div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Stagger children</b></div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Custom cursor</b></div>
-        <div layout="row" gap="sm"><span class="yes">✓</span> <b>Popover</b></div>
-      </div>
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">✍️</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">Rich Typography</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">10 type presets, text gradients, stroke, glow, typewriter, fluid scaling, and truncation helpers.</div>
     </div>
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">📐</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">Powerful Layouts</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">stack, row, grid, bento, masonry, sidebar, split, prose — with responsive column controls.</div>
+    </div>
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">🌈</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">18 Gradients</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">Named background and text gradients — sunset, ocean, aurora, neon, candy, electric, and more.</div>
+    </div>
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">✨</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">Motion & Animations</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">Hover effects, 12 looping animations, scroll reveal, stagger children, float, and spring physics.</div>
+    </div>
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">🧩</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">Ready Components</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">Modal, drawer, accordion, tabs, popover, toast, badges, tooltips, progress, and forms.</div>
+    </div>
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">⚡</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">JS Magic</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">Tilt 3D, magnetic, ripple, confetti, counter animation, typewriter, cursor trail — all via HTML attributes.</div>
+    </div>
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">🎭</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">Effects & Filters</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">Glow, ring, blur, backdrop, patterns, masks, clip paths, blend modes, and CSS filters.</div>
+    </div>
+
+    <div surface="neon" tone="primary" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">🪶</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">~52kb. Zero deps.</div>
+      <div style="font-size:0.85rem;opacity:0.8;line-height:1.6">CSS + JS combined. No build step. No dependencies. Drop in two tags and go.</div>
+    </div>
+
   </div>
 </section>
 
