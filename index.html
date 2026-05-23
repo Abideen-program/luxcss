@@ -35,6 +35,7 @@
     }
     .nav-logo { font-family: var(--lux-font-display); font-size: 1.3rem; font-weight: 800; letter-spacing: -0.03em; }
     .nav-links { display: flex; align-items: center; gap: 0.5rem; }
+    .nav-link-hide { } /* visible by default */
 
     /* Section labels */
     .section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
@@ -115,6 +116,61 @@
     .feat-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
     .feat-table tr:last-child td { border-bottom: none; }
 
+    /* ── Mobile ───────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      /* Nav — clean icon-only strip */
+      .nav { padding: 0.75rem 1.1rem; }
+      .nav-logo { font-size: 1.1rem; }
+      .nav-link-hide { display: none; }
+      .nav-links { gap: 0.35rem; }
+
+      /* Sections */
+      .section { padding: 3.5rem 1.1rem; }
+
+      /* Hero */
+      .hero-glow { width: 320px; height: 240px; }
+
+      /* Stats row — 2 columns on mobile */
+      .hero-stats { flex-wrap: wrap; gap: 1.5rem !important; justify-content: center !important; }
+
+      /* Feature cards — single column */
+      .feature-grid { grid-template-columns: 1fr !important; }
+
+      /* Buttons in hero — stack */
+      .hero-btns { flex-direction: column; align-items: stretch; width: 100%; max-width: 260px; margin: 0 auto; }
+      .hero-btns button { width: 100%; justify-content: center; }
+
+      /* Gradient cards — 2 col */
+      .gradient-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+      /* Motion cards — 2 col */
+      .motion-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+      /* Code blocks */
+      .code-block { font-size: 0.72rem; padding: 0.875rem 1rem; }
+
+      /* Interaction buttons — stack */
+      .interact-row { flex-direction: column !important; align-items: stretch !important; }
+      .interact-row button { width: 100%; justify-content: center; }
+
+      /* Modal max-width */
+      [modal] { padding: 1.25rem; }
+
+      /* Forms */
+      [input] { font-size: 0.9rem; }
+
+      /* CTA section */
+      .cta-btns { flex-direction: column; align-items: center; width: 100%; }
+      .cta-btns button { width: 100%; max-width: 260px; justify-content: center; }
+
+      /* Footer */
+      footer { padding: 1.5rem 1.1rem; }
+    }
+
+    @media (max-width: 400px) {
+      .nav-logo { font-size: 1rem; }
+      .version-chip-nav { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -123,19 +179,18 @@
 <nav class="nav">
   <div class="nav-logo" text-gradient="electric">✦ lux</div>
   <div class="nav-links">
-    <button surface="ghost" tone="primary" density="compact" radius="full"
+    <button class="nav-link-hide" surface="ghost" tone="primary" density="compact" radius="full"
             smooth-scroll href="#features" style="font-size:0.82rem">Features</button>
-
-    <button surface="ghost" tone="primary" density="compact" radius="full"
+    <button class="nav-link-hide" surface="ghost" tone="primary" density="compact" radius="full"
             smooth-scroll href="#components" style="font-size:0.82rem">Components</button>
-    <button surface="ghost" tone="primary" density="compact" radius="full"
+    <button class="nav-link-hide" surface="ghost" tone="primary" density="compact" radius="full"
             smooth-scroll href="#effects" style="font-size:0.82rem">Effects</button>
     <button surface="solid" tone="primary" density="compact" radius="full" ripple magnetic
             toast-trigger toast-title="Copied!" toast-msg="Link tag copied to clipboard 🎉" toast-type="success"
             copy='<link rel="stylesheet" href="https://unpkg.com/luxcss/dist/lux.css">'
             style="font-size:0.82rem">Get Lux</button>
     <button theme-toggle surface="ghost" tone="neutral" density="compact" radius="full"
-            tooltip="Toggle theme" style="font-size:0.82rem">◑</button>
+            tooltip="Toggle theme" tooltip-pos="bottom" style="font-size:0.82rem">◑</button>
   </div>
 </nav>
 
@@ -161,7 +216,7 @@
       Just HTML attributes that do everything.
     </p>
 
-    <div layout="row" gap="sm" wrap reveal="bottom" reveal-delay="300" style="justify-content:center;">
+    <div class="hero-btns" layout="row" gap="sm" wrap reveal="bottom" reveal-delay="300" style="justify-content:center;">
       <button surface="solid" tone="primary" radius="full" density="spacious" ripple magnetic motion="expressive"
               confetti-trigger confetti-count="100">
         ✦ Try Lux Free
@@ -173,7 +228,7 @@
     </div>
 
     <!-- Stats -->
-    <div layout="row" gap="xl" reveal="bottom" reveal-delay="400" style="justify-content:center;margin-top:1rem;">
+    <div class="hero-stats" layout="row" gap="xl" reveal="bottom" reveal-delay="400" style="justify-content:center;margin-top:1rem;">
       <div layout="stack" align="center" gap="xs">
         <span text="heading" style="font-family:'Syne',sans-serif" tone="primary">
           <span counter="200" counter-suffix="+" counter-duration="1800">0</span>
@@ -457,7 +512,7 @@
   <div class="section-label">Interactions</div>
   <h2 text="heading" reveal="bottom" balance style="margin-bottom:2rem;font-family:'Syne',sans-serif;">Click to see the magic.</h2>
 
-  <div layout="row" gap="md" wrap stagger="80">
+  <div class="interact-row" layout="row" gap="md" wrap stagger="80">
     <!-- Modal -->
     <button surface="solid"  tone="primary" radius="full" density="spacious" ripple magnetic motion="expressive"
             modal-open="demo-modal">Open Modal ↗</button>
@@ -684,7 +739,7 @@
 <hr class="divider" />
 
 <!-- ── CTA ────────────────────────────────────────────────────── -->
-<section style="padding:6rem 2rem;text-align:center;position:relative;overflow:hidden;">
+<section style="padding:6rem 1.5rem;text-align:center;position:relative;overflow:hidden;">
   <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,color-mix(in srgb,var(--lux-primary) 12%,transparent),transparent);pointer-events:none;"></div>
   <div layout="stack" align="center" gap="lg" style="position:relative;max-width:600px;margin:0 auto;" stagger="120">
     <span badge="dot" tone="success">Open Source — MIT</span>
@@ -694,7 +749,7 @@
     <p text="lead" style="opacity:0.65">
       Drop two lines in your HTML. Style everything with attributes.<br>Ship faster than ever.
     </p>
-    <div layout="row" gap="sm" justify="center">
+    <div class="cta-btns" layout="row" gap="sm" justify="center">
       <button surface="solid" tone="primary" radius="full" density="spacious" ripple magnetic motion="expressive"
               confetti-trigger confetti-count="150">
         ✦ Get Started Free
