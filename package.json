@@ -24,9 +24,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/luxcss"
+    "url": "https://github.com/abideen-program/luxcss"
   },
-  "homepage": "https://luxcss.dev",
+  "homepage": "https://abideen-program.github.io/luxcss/",
   "scripts": {
     "build": "echo 'No build step needed — dist/ is the source'",
     "prepublishOnly": "npm run build"

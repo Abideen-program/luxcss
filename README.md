@@ -4,7 +4,14 @@
 
 Lux is a drop-in CSS + JS styling library that lets you build beautiful, interactive UIs purely through HTML attributes — no class names, no JavaScript frameworks, no config files.
 
+[![npm version](https://img.shields.io/npm/v/luxcss.svg)](https://www.npmjs.com/package/luxcss)
+[![npm downloads](https://img.shields.io/npm/dm/luxcss.svg)](https://www.npmjs.com/package/luxcss)
+[![CI](https://github.com/Abideen-program/luxcss/actions/workflows/ci.yml/badge.svg)](https://github.com/Abideen-program/luxcss/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 ---
+
+📖 **[Documentation](https://abideen-program.github.io/luxcss/)** — full API reference, examples, and quick start guide.
 
 ## ⚡ Quick Start
 
@@ -323,4 +330,4 @@ No dependencies. No build step. No runtime overhead.
 
 ## License
 
-MIT © Lux Contributors
+MIT © [Abideen Olafimihan] · [Documentation](https://abideen-program.github.io/luxcss/docs.html) · [npm](https://npmjs.com/package/luxcss) · [GitHub](https://github.com/abideen-program/luxcss)
