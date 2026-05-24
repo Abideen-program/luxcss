@@ -1396,15 +1396,13 @@ code {
 
       <!-- Modal for docs demo -->
       <div modal-backdrop id="doc-modal">
-        <div modal radius="xl" style="position:relative">
-          <button modal-close style="position:absolute;top:1rem;right:1rem;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--lux-surface-2);border:1px solid var(--lux-border);cursor:pointer;font-size:14px;color:var(--lux-fg);z-index:10;line-height:1">✕</button>
-          <div style="padding-top:0.5rem">
-            <h2 text="heading" text-gradient="electric" style="font-family:'Syne',sans-serif;margin-bottom:0.75rem">Lux Modal</h2>
-            <p style="font-size:0.9rem;opacity:0.7;line-height:1.7">Modals spring in with a scale + translate animation. Close with the ✕ button, click the backdrop, or press ESC.</p>
-            <div style="display:flex;gap:0.5rem;justify-content:flex-end;margin-top:1.25rem">
-              <button surface="ghost" tone="neutral" radius="full" density="compact" modal-close>Cancel</button>
-              <button surface="solid" tone="primary" radius="full" density="compact" ripple modal-close>Got it</button>
-            </div>
+        <div modal>
+          <button modal-close>✕</button>
+          <h2 text="heading" text-gradient="electric" style="font-family:'Syne',sans-serif;margin-bottom:0.75rem">Lux Modal</h2>
+          <p style="font-size:0.9rem;opacity:0.7;line-height:1.7">Modals spring in with a scale + translate animation. Close with the ✕ button, click the backdrop, or press ESC.</p>
+          <div style="display:flex;gap:0.5rem;justify-content:flex-end;margin-top:1.25rem">
+            <button surface="ghost" tone="neutral" radius="full" density="compact" modal-close>Cancel</button>
+            <button surface="solid" tone="primary" radius="full" density="compact" ripple modal-close>Got it</button>
           </div>
         </div>
       </div>
