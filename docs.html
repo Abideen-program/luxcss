@@ -4,6 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Lux Docs — Attribute-First CSS & JS Library</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236366f1'/><text x='50%' y='54%' font-size='20' text-anchor='middle' dominant-baseline='middle' fill='white' font-family='system-ui' font-weight='900'>✦</text></svg>" />
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
@@ -119,9 +120,10 @@ a { text-decoration: none; color: inherit; }
 .sidebar-link.active {
   opacity: 1;
   color: var(--lux-primary);
-  border-left-color: var(--lux-primary);
-  background: color-mix(in srgb, var(--lux-primary) 8%, transparent);
-  font-weight: 500;
+  border-left: 2px solid var(--lux-primary);
+  background: color-mix(in srgb, var(--lux-primary) 12%, transparent);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 .sidebar-link .badge {
   margin-left: auto;
@@ -1395,7 +1397,7 @@ code {
       <!-- Modal for docs demo -->
       <div modal-backdrop id="doc-modal">
         <div modal radius="xl">
-          <button modal-close>✕</button>
+          <button modal-close style="position:absolute;top:1rem;right:1rem;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:var(--lux-surface-2);border:1px solid var(--lux-border);cursor:pointer;font-size:14px;color:var(--lux-fg);line-height:1">✕</button>
           <h2 text="heading" text-gradient="electric" style="font-family:'Syne',sans-serif;margin-bottom:0.75rem">Lux Modal</h2>
           <p style="font-size:0.9rem;opacity:0.7;line-height:1.7">Modals spring in with a scale + translate animation. Close with the ✕ button, click the backdrop, or press ESC.</p>
           <div style="display:flex;gap:0.5rem;justify-content:flex-end;margin-top:1.25rem">
@@ -1437,6 +1439,67 @@ code {
       <div drawer-backdrop id="doc-drawer-r"><div drawer drawer-side="right"><button drawer-close style="margin-bottom:1rem">✕ Close</button><p style="opacity:0.7;font-size:0.875rem">Right drawer content.</p></div></div>
       <div drawer-backdrop id="doc-drawer-l"><div drawer drawer-side="left"><button drawer-close style="margin-bottom:1rem">✕ Close</button><p style="opacity:0.7;font-size:0.875rem">Left drawer content.</p></div></div>
       <div drawer-backdrop id="doc-drawer-b"><div drawer drawer-side="bottom"><button drawer-close style="margin-bottom:1rem">✕ Close</button><p style="opacity:0.7;font-size:0.875rem">Bottom drawer content.</p></div></div>
+
+      <!-- ══════════════════ POPOVER ══════════════════ -->
+      <div class="docs-page" id="page-popover">
+        <div class="page-hero">
+          <span class="section-eyebrow">Components</span>
+          <h1>Popover</h1>
+          <p>Click-triggered floating panels. Closes on outside click automatically.</p>
+        </div>
+        <div class="prose-section">
+          <h2>Usage</h2>
+          <div class="code-wrap">
+            <pre class="code-block">&lt;<span class="tag">div</span> <span class="attr">popover-trigger</span>&gt;
+  &lt;<span class="tag">button</span>&gt;Open Popover&lt;/<span class="tag">button</span>&gt;
+  &lt;<span class="tag">div</span> <span class="attr">popover-panel</span>&gt;
+    Popover content here
+  &lt;/<span class="tag">div</span>&gt;
+&lt;/<span class="tag">div</span>&gt;</pre>
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          </div>
+
+          <div class="demo-box">
+            <div class="demo-preview center" style="min-height:180px;align-items:flex-start;padding-top:2rem">
+              <div popover-trigger style="display:inline-block">
+                <button surface="solid" tone="primary" radius="full" density="default" ripple>Open Popover ↓</button>
+                <div popover-panel>
+                  <div style="display:flex;flex-direction:column;gap:0.5rem;min-width:180px">
+                    <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;opacity:0.4;padding:0 0.25rem;margin-bottom:0.25rem">Quick Actions</div>
+                    <div surface="matte" radius="md" density="compact" motion="subtle" style="cursor:pointer;font-size:0.875rem">✏️ Edit item</div>
+                    <div surface="matte" radius="md" density="compact" motion="subtle" style="cursor:pointer;font-size:0.875rem">📋 Duplicate</div>
+                    <div style="border-top:1px solid var(--lux-border);margin:0.25rem 0"></div>
+                    <div surface="matte" radius="md" density="compact" motion="subtle" style="cursor:pointer;font-size:0.875rem;color:var(--lux-danger)">🗑️ Delete</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="demo-label">Click the button to open the popover</div>
+          </div>
+
+          <h2>With custom content</h2>
+          <div class="code-wrap">
+            <pre class="code-block">&lt;<span class="tag">div</span> <span class="attr">popover-trigger</span>&gt;
+  &lt;<span class="tag">button</span> <span class="attr">surface</span>=<span class="val">"matte"</span> <span class="attr">radius</span>=<span class="val">"full"</span>&gt;Profile ↓&lt;/<span class="tag">button</span>&gt;
+  &lt;<span class="tag">div</span> <span class="attr">popover-panel</span>&gt;
+    &lt;<span class="tag">div</span> <span class="attr">layout</span>=<span class="val">"stack"</span> <span class="attr">gap</span>=<span class="val">"sm"</span>&gt;
+      &lt;<span class="tag">div</span> <span class="attr">layout</span>=<span class="val">"row"</span> <span class="attr">gap</span>=<span class="val">"sm"</span>&gt;
+        &lt;<span class="tag">div</span> <span class="attr">surface</span>=<span class="val">"solid"</span> <span class="attr">tone</span>=<span class="val">"primary"</span> <span class="attr">radius</span>=<span class="val">"full"</span>
+             style=<span class="val">"width:36px;height:36px;display:flex;align-items:center;justify-content:center"</span>&gt;A&lt;/<span class="tag">div</span>&gt;
+        &lt;<span class="tag">div</span>&gt;
+          &lt;<span class="tag">div</span> style=<span class="val">"font-weight:600;font-size:0.875rem"</span>&gt;Abideen&lt;/<span class="tag">div</span>&gt;
+          &lt;<span class="tag">div</span> style=<span class="val">"font-size:0.75rem;opacity:0.5"</span>&gt;admin@luxcss.dev&lt;/<span class="tag">div</span>&gt;
+        &lt;/<span class="tag">div</span>&gt;
+      &lt;/<span class="tag">div</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  &lt;/<span class="tag">div</span>&gt;
+&lt;/<span class="tag">div</span>&gt;</pre>
+            <button class="copy-btn" onclick="copyCode(this)">copy</button>
+          </div>
+
+          <div class="callout info"><span class="callout-icon">ℹ</span><span>Popovers close automatically when you click anywhere outside them. No extra JS needed.</span></div>
+        </div>
+      </div>
 
       <!-- ══════════════════ TOAST ══════════════════ -->
       <div class="docs-page" id="page-toast">
@@ -1567,15 +1630,51 @@ code {
 &lt;/<span class="tag">div</span>&gt;</pre>
             <button class="copy-btn" onclick="copyCode(this)">copy</button>
           </div>
+
           <div class="demo-box">
-            <div class="demo-preview stack" style="gap:1rem;padding:1.5rem">
-              <div progress tone="primary"><div progress-bar style="width:75%"></div></div>
-              <div progress tone="success"><div progress-bar style="width:50%"></div></div>
-              <div progress tone="warning"><div progress-bar style="width:30%"></div></div>
-              <div progress="striped" tone="info"><div progress-bar style="width:60%"></div></div>
+            <div class="demo-preview" style="flex-direction:column;gap:1.25rem;padding:1.75rem">
+
+              <div style="display:flex;flex-direction:column;gap:0.4rem;width:100%">
+                <div style="display:flex;justify-content:space-between;font-size:0.78rem;opacity:0.6"><span>Design</span><span>75%</span></div>
+                <div style="height:6px;background:var(--lux-surface-2);border-radius:9999px;overflow:hidden;width:100%">
+                  <div style="height:100%;width:75%;background:var(--lux-primary);border-radius:9999px;transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1)"></div>
+                </div>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:0.4rem;width:100%">
+                <div style="display:flex;justify-content:space-between;font-size:0.78rem;opacity:0.6"><span>Development</span><span>50%</span></div>
+                <div style="height:6px;background:var(--lux-surface-2);border-radius:9999px;overflow:hidden;width:100%">
+                  <div style="height:100%;width:50%;background:var(--lux-success);border-radius:9999px;transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1)"></div>
+                </div>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:0.4rem;width:100%">
+                <div style="display:flex;justify-content:space-between;font-size:0.78rem;opacity:0.6"><span>Testing</span><span>30%</span></div>
+                <div style="height:6px;background:var(--lux-surface-2);border-radius:9999px;overflow:hidden;width:100%">
+                  <div style="height:100%;width:30%;background:var(--lux-warning);border-radius:9999px;transition:width 0.6s cubic-bezier(0.34,1.56,0.64,1)"></div>
+                </div>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:0.4rem;width:100%">
+                <div style="display:flex;justify-content:space-between;font-size:0.78rem;opacity:0.6"><span>Launch (striped)</span><span>60%</span></div>
+                <div style="height:6px;background:var(--lux-surface-2);border-radius:9999px;overflow:hidden;width:100%">
+                  <div style="height:100%;width:60%;background:var(--lux-info);border-radius:9999px;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.15) 0,rgba(255,255,255,0.15) 10px,transparent 10px,transparent 20px);animation:lux-stripes 1s linear infinite;background-size:28px 100%"></div>
+                </div>
+              </div>
+
             </div>
-            <div class="demo-label">progress= in action</div>
+            <div class="demo-label">progress bars — primary, success, warning, striped</div>
           </div>
+
+          <h2>Attributes</h2>
+          <table class="attr-table">
+            <thead><tr><th>Attribute</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td>progress</td><td>Creates the track. Use <code>tone=</code> to set the bar color.</td></tr>
+              <tr><td>progress="striped"</td><td>Animated diagonal stripe pattern on the bar.</td></tr>
+              <tr><td>progress-bar</td><td>The fill element inside. Set width via <code>style="width:X%"</code>.</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -1722,6 +1821,34 @@ code {
   <span class="attr">typewriter-cursor</span>           <span class="cmt">&lt;!-- blinking cursor --&gt;</span>
   <span class="attr">typewriter-loop</span>             <span class="cmt">&lt;!-- repeat forever --&gt;</span>
 &gt;Loops forever.&lt;/<span class="tag">p</span>&gt;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+          <div class="demo-box">
+            <div class="demo-preview stack" style="gap:1.5rem;padding:2rem">
+              <div surface="matte" radius="xl" density="spacious" style="width:100%">
+                <div style="font-size:0.65rem;font-family:var(--lux-font-mono);letter-spacing:0.1em;text-transform:uppercase;opacity:0.4;margin-bottom:0.75rem">Default speed</div>
+                <p text="heading" id="tw-demo-1" typewriter typewriter-speed="60" style="font-family:'Syne',sans-serif;min-height:1.4em">Building beautiful UIs with Lux.</p>
+              </div>
+              <div surface="matte" radius="xl" density="spacious" style="width:100%">
+                <div style="font-size:0.65rem;font-family:var(--lux-font-mono);letter-spacing:0.1em;text-transform:uppercase;opacity:0.4;margin-bottom:0.75rem">With cursor + loop</div>
+                <p text="lead" id="tw-demo-2" typewriter typewriter-speed="80" typewriter-cursor typewriter-loop style="min-height:1.6em">Zero dependencies. One attribute.</p>
+              </div>
+            </div>
+            <div class="demo-label" style="display:flex;align-items:center;justify-content:space-between">
+              <span>Typewriter in action</span>
+              <button onclick="replayTypewriters()" style="font-size:0.65rem;font-family:var(--lux-font-mono);background:var(--lux-surface-2);border:1px solid var(--lux-border);border-radius:var(--lux-r-sm);padding:0.2em 0.6em;cursor:pointer;color:var(--lux-fg)">↺ replay</button>
+            </div>
+          </div>
+
+          <h2>Attributes</h2>
+          <table class="attr-table">
+            <thead><tr><th>Attribute</th><th>Description</th><th>Default</th></tr></thead>
+            <tbody>
+              <tr><td>typewriter</td><td>Enables the effect — required</td><td>—</td></tr>
+              <tr><td>typewriter-speed=</td><td>Milliseconds per character</td><td>50</td></tr>
+              <tr><td>typewriter-cursor</td><td>Shows a blinking cursor while typing</td><td>off</td></tr>
+              <tr><td>typewriter-loop</td><td>Restarts after finishing</td><td>off</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
 
@@ -2076,6 +2203,32 @@ function copyCode(btn) {
   });
 }
 window.copyCode = copyCode;
+
+// ── Typewriter replay ────────────────────────────────────────
+function replayTypewriters() {
+  ['tw-demo-1', 'tw-demo-2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const text = el.getAttribute('data-original') || el.textContent || el.getAttribute('data-text');
+    if (text) el.setAttribute('data-original', text);
+    el.textContent = '';
+    const speed = parseInt(el.getAttribute('typewriter-speed') || '60');
+    const cursor = el.hasAttribute('typewriter-cursor');
+    if (cursor) el.style.borderRight = '2px solid currentColor';
+    let i = 0;
+    const fullText = el.getAttribute('data-original') || '';
+    function type() {
+      if (i <= fullText.length) {
+        el.textContent = fullText.slice(0, i++);
+        setTimeout(type, speed);
+      } else if (cursor) {
+        setTimeout(() => { el.style.borderRight = 'none'; }, 500);
+      }
+    }
+    type();
+  });
+}
+window.replayTypewriters = replayTypewriters;
 
 // ── Logo → home ──────────────────────────────────────────────
 document.getElementById('docsLogoBtn').addEventListener('click', () => {

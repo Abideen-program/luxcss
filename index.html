@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Lux — Attribute-First CSS & JS Library</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236366f1'/><text x='50%' y='54%' font-size='20' text-anchor='middle' dominant-baseline='middle' fill='white' font-family='system-ui' font-weight='900'>✦</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
@@ -185,9 +186,9 @@
             smooth-scroll href="#components" style="font-size:0.82rem">Components</button>
     <button class="nav-link-hide" surface="ghost" tone="primary" density="compact" radius="full"
             smooth-scroll href="#effects" style="font-size:0.82rem">Effects</button>
+    <a href="docs.html" class="nav-link-hide" style="font-size:0.82rem;padding:0.375rem 0.75rem;border-radius:9999px;border:1px solid var(--lux-border);color:var(--lux-fg);opacity:0.7;transition:opacity 0.15s;text-decoration:none" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">Docs ↗</a>
     <button surface="solid" tone="primary" density="compact" radius="full" ripple magnetic
-            toast-trigger toast-title="Copied!" toast-msg="Link tag copied to clipboard 🎉" toast-type="success"
-            copy='<link rel="stylesheet" href="https://unpkg.com/luxcss/dist/lux.css">'
+            onclick="navigator.clipboard.writeText('<link rel=\'stylesheet\' href=\'https://unpkg.com/luxcss/lux.css\'>\n<script src=\'https://unpkg.com/luxcss/lux.js\'><\/script>').then(()=>{ Lux.toast('Copied to clipboard!',{title:'Ready to use 🎉',type:'success'}); })"
             style="font-size:0.82rem">Get Lux</button>
     <button theme-toggle surface="ghost" tone="neutral" density="compact" radius="full"
             tooltip="Toggle theme" tooltip-pos="bottom" style="font-size:0.82rem">◑</button>
