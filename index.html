@@ -173,7 +173,7 @@
     }
   </style>
 </head>
-<body>
+<body cursor-trail>
 
 <!-- ── NAV ──────────────────────────────────────────────────── -->
 <nav class="nav">
@@ -545,28 +545,24 @@
 
 <!-- Modal -->
 <div modal-backdrop id="demo-modal">
-  <div modal>
+  <div modal-wrapper>
     <button modal-close>✕</button>
-    <div layout="stack" gap="md">
-      <h2 text="heading" style="font-family:'Syne',sans-serif" text-gradient="electric">Hello from Lux!</h2>
-      <p text="body" style="opacity:0.7">
-        This modal was created with zero JavaScript on your end.
-        Just add <code>modal-backdrop</code> and <code>modal</code> attributes, and a button with <code>modal-open</code>.
-        Lux handles the rest — animations, backdrop blur, ESC key, and focus management.
-      </p>
-      <div class="code-block">
+    <div modal>
+      <div layout="stack" gap="md">
+        <h2 text="heading" style="font-family:'Syne',sans-serif" text-gradient="electric">Hello from Lux!</h2>
+        <p text="body" style="opacity:0.7">
+          This modal was created with zero JavaScript on your end.
+          Just add <code>modal-backdrop</code> and <code>modal</code> attributes, and a button with <code>modal-open</code>.
+          Lux handles the rest — animations, backdrop blur, ESC key, and focus management.
+        </p>
+        <div class="code-block">
 &lt;<span class="tag">div</span> <span class="attr">modal-backdrop</span> <span class="attr">id</span>=<span class="val">"my-modal"</span>&gt;<br>
-  &lt;<span class="tag">div</span> <span class="attr">modal</span>&gt;<br>
+  &lt;<span class="tag">div</span> <span class="attr">modal-wrapper</span>&gt;<br>
     &lt;<span class="tag">button</span> <span class="attr">modal-close</span>&gt;✕&lt;/<span class="tag">button</span>&gt;<br>
-    Your content here<br>
+    &lt;<span class="tag">div</span> <span class="attr">modal</span>&gt;Your content here&lt;/<span class="tag">div</span>&gt;<br>
   &lt;/<span class="tag">div</span>&gt;<br>
-&lt;/<span class="tag">div</span>&gt;<br><br>
-&lt;<span class="tag">button</span> <span class="attr">modal-open</span>=<span class="val">"my-modal"</span>&gt;Open&lt;/<span class="tag">button</span>&gt;
-      </div>
-      <div layout="row" gap="sm" justify="end">
-        <button surface="ghost" tone="neutral" radius="full" density="compact" modal-close>Cancel</button>
-        <button surface="solid" tone="primary" radius="full" density="compact" ripple modal-close
-                confetti-trigger>Confirm 🎉</button>
+&lt;/<span class="tag">div</span>&gt;
+        </div>
       </div>
     </div>
   </div>
@@ -754,9 +750,9 @@
               confetti-trigger confetti-count="150">
         ✦ Get Started Free
       </button>
-      <a href="https://github.com/abideen-program/luxcss" target="_blank" surface="ghost" tone="neutral" radius="full" density="spacious" motion="subtle" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">
+      <button surface="ghost" tone="neutral" radius="full" density="spacious" motion="subtle">
         GitHub ↗
-      </a>
+      </button>
     </div>
   </div>
 </section>

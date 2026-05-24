@@ -1247,31 +1247,35 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
 [modal-backdrop].lux-open {
   opacity: 1; pointer-events: auto;
 }
+[modal-wrapper] {
+  position: relative;
+  max-width: min(90vw, 560px);
+  width: 100%;
+  transform: scale(0.92) translateY(16px);
+  transition: transform var(--lux-dur-base) var(--lux-ease-spring);
+}
+[modal-backdrop].lux-open [modal-wrapper] {
+  transform: scale(1) translateY(0);
+}
 [modal] {
-  position: relative !important;
   background: var(--lux-bg);
   border: 1px solid var(--lux-border);
   border-radius: var(--lux-r-xl);
   padding: 2.5rem 2rem 2rem !important;
-  max-width: min(90vw, 560px);
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: var(--lux-shadow-xl);
-  transform: scale(0.92) translateY(16px);
-  transition: transform var(--lux-dur-base) var(--lux-ease-spring);
 }
 [modal-backdrop].lux-open [modal] {
-  transform: scale(1) translateY(0);
+  transform: none;
 }
 [modal-close] {
   position: absolute !important;
-  top: 0.875rem !important;
-  right: 0.875rem !important;
+  top: 0.75rem !important;
+  right: 0.75rem !important;
   width: 28px !important;
   height: 28px !important;
-  min-width: 28px !important;
-  min-height: 28px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -1283,10 +1287,9 @@ button { cursor: pointer; font: inherit; border: none; background: none; }
   line-height: 1 !important;
   color: var(--lux-fg) !important;
   opacity: 0.7;
-  z-index: 100 !important;
+  z-index: 9999 !important;
   padding: 0 !important;
   margin: 0 !important;
-  flex-shrink: 0 !important;
   transition: opacity var(--lux-dur-fast), background var(--lux-dur-fast);
 }
 [modal-close]:hover { opacity: 1 !important; background: var(--lux-surface-1) !important; }
