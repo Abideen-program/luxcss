@@ -24,7 +24,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/abideen-program/luxcss"
+    "url": "git+https://github.com/abideen-program/luxcss.git"
   },
   "homepage": "https://abideen-program.github.io/luxcss/",
   "scripts": {
