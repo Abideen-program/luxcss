@@ -1,6 +1,6 @@
 {
   "name": "luxcss",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Lux — The attribute-first CSS + JS styling library. More powerful than useaura, zero dependencies.",
   "main": "dist/lux.js",
   "style": "dist/lux.css",
