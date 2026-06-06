@@ -7,7 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.0] — 2026-05-23
+## [1.0.3] — 2026-06-06
+
+### Changed
+- Simplified framework setup — now just two imports in any framework (React, Next.js, Vue, Svelte)
+- Removed requirement for `LuxProvider`, `useEffect`, or any extra config in Next.js
+- Updated `package.json` exports for better bundler compatibility
+- Updated `README.md`, `FRAMEWORKS.md`, docs, and demo site to reflect simplified setup
+
+### Added
+- `dist/lux.d.ts` — full TypeScript declarations for all 200+ attributes
+- Framework Guides page in docs site
+- Framework switcher tabs in demo site install section
+
+### Fixed
+- SSR crash in Next.js — `lux.js` now safely no-ops on the server
+- `dist/` folder now correctly included in npm package
+
+---
+
+## [1.0.2] — 2026-06-04
+
+### Fixed
+- Republish to fix dist/ folder missing from npm package
+
+---
+
+## [1.0.1] — 2026-06-03
+
+### Fixed
+- SSR safety guard added to `lux.js`
+- TypeScript declarations file added (`lux.d.ts`)
+
+---
+
+
 
 ### 🎉 Initial Release
 

@@ -1,6 +1,6 @@
 {
   "name": "luxcss",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Attribute-first CSS & JS library. Style anything with one HTML attribute. Zero dependencies, no build step.",
   "main": "dist/lux.js",
   "style": "dist/lux.css",
@@ -11,18 +11,9 @@
     "LICENSE"
   ],
   "keywords": [
-    "css",
-    "utility",
-    "attribute-first",
-    "styling",
-    "animations",
-    "components",
-    "zero-dependency",
-    "lux",
-    "design-system",
-    "html",
-    "frontend",
-    "ui"
+    "css", "javascript", "css-library", "frontend",
+    "ui", "design-system", "zero-dependency",
+    "attributes", "html", "styling", "nextjs", "react"
   ],
   "author": "Abideen",
   "license": "MIT",
@@ -43,10 +34,13 @@
   "exports": {
     ".": {
       "style": "./dist/lux.css",
+      "browser": "./dist/lux.js",
       "default": "./dist/lux.js"
     },
     "./css": "./dist/lux.css",
-    "./js": "./dist/lux.js"
+    "./dist/lux.css": "./dist/lux.css",
+    "./dist/lux.js": "./dist/lux.js",
+    "./dist/lux.d.ts": "./dist/lux.d.ts"
   },
   "sideEffects": [
     "dist/lux.css",

@@ -948,6 +948,99 @@ code {
         </div>
       </div>
 
+      <!-- ══════════════════ FRAMEWORKS ══════════════════ -->
+      <div class="docs-page" id="page-frameworks">
+        <div class="page-hero">
+          <span class="section-eyebrow">Getting Started</span>
+          <h1>Framework Guides</h1>
+          <p>Two imports. Any framework. Just like Tailwind.</p>
+        </div>
+        <div class="prose-section">
+
+          <div class="callout tip"><span class="callout-icon">💡</span><span>No providers, no useEffect, no extra config. Just add the two imports to your entry file and start using attributes immediately.</span></div>
+
+          <h2>React / Vite</h2>
+          <div class="code-wrap"><pre class="code-block"><span class="cmt">// src/main.jsx</span>
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+          <h2>Next.js — App Router</h2>
+          <div class="code-wrap"><pre class="code-block"><span class="cmt">// app/layout.tsx</span>
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+          <div class="demo-box">
+            <div class="demo-preview stack" style="padding:1.5rem;gap:0.5rem">
+              <div style="font-size:0.78rem;opacity:0.5;font-family:var(--lux-font-mono)">app/layout.tsx</div>
+              <div class="code-block" style="margin:0;font-size:0.75rem">
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;
+<span class="kw">import</span> type { Metadata } <span class="kw">from</span> <span class="str">'next'</span>;
+
+<span class="kw">export const</span> metadata: Metadata = { title: <span class="str">'My App'</span> };
+
+<span class="kw">export default function</span> <span class="fn">RootLayout</span>({ children }) {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">html</span> <span class="attr">lang</span>=<span class="val">"en"</span>&gt;
+      &lt;<span class="tag">body</span>&gt;{children}&lt;/<span class="tag">body</span>&gt;
+    &lt;/<span class="tag">html</span>&gt;
+  );
+}</div>
+            </div>
+            <div class="demo-label">Complete layout.tsx — nothing extra needed</div>
+          </div>
+
+          <h2>Next.js — Pages Router</h2>
+          <div class="code-wrap"><pre class="code-block"><span class="cmt">// pages/_app.tsx</span>
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;
+
+<span class="kw">export default function</span> <span class="fn">App</span>({ Component, pageProps }) {
+  <span class="kw">return</span> &lt;<span class="tag">Component</span> {...pageProps} /&gt;;
+}</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+          <h2>Vue 3</h2>
+          <div class="code-wrap"><pre class="code-block"><span class="cmt">// src/main.js</span>
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+          <h2>SvelteKit</h2>
+          <div class="code-wrap"><pre class="code-block"><span class="cmt">&lt;!-- src/routes/+layout.svelte --&gt;</span>
+&lt;<span class="tag">script</span>&gt;
+  <span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
+  <span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;
+&lt;/<span class="tag">script</span>&gt;
+&lt;<span class="tag">slot</span> /&gt;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+          <h2>Using Lux attributes in JSX</h2>
+          <p>Once imported, use any Lux attribute on any element:</p>
+          <div class="code-wrap"><pre class="code-block"><span class="kw">export default function</span> <span class="fn">Page</span>() {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">div</span> <span class="attr">surface</span>=<span class="val">"glass"</span> <span class="attr">radius</span>=<span class="val">"xl"</span> <span class="attr">motion</span>=<span class="val">"expressive"</span>&gt;
+      &lt;<span class="tag">h1</span> <span class="attr">text</span>=<span class="val">"heading"</span> <span class="attr">text-gradient</span>=<span class="val">"electric"</span>&gt;Hello&lt;/<span class="tag">h1</span>&gt;
+      &lt;<span class="tag">button</span> <span class="attr">surface</span>=<span class="val">"solid"</span> <span class="attr">tone</span>=<span class="val">"primary"</span> <span class="attr">ripple</span> <span class="attr">magnetic</span>&gt;
+        Click me
+      &lt;/<span class="tag">button</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+          <h2>TypeScript</h2>
+          <p>Lux ships with full TypeScript declarations — all attributes are typed automatically. If you see TypeScript errors, add this to your <code>tsconfig.json</code>:</p>
+          <div class="code-wrap"><pre class="code-block">{
+  <span class="str">"compilerOptions"</span>: {
+    <span class="str">"lib"</span>: [<span class="str">"dom"</span>, <span class="str">"dom.iterable"</span>, <span class="str">"esnext"</span>]
+  }
+}</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+          <h2>Using the JS API</h2>
+          <div class="code-wrap"><pre class="code-block"><span class="cmt">// In any client component</span>
+<span class="fn">window</span>.Lux.<span class="fn">toast</span>(<span class="str">'Saved!'</span>, { title: <span class="str">'Done'</span>, type: <span class="str">'success'</span> });
+<span class="fn">window</span>.Lux.<span class="fn">confetti</span>({ count: <span class="num">80</span> });</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+        </div>
+      </div>
+
       <!-- ══════════════════ CONCEPTS ══════════════════ -->
       <div class="docs-page" id="page-concepts">
         <div class="page-hero">

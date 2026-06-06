@@ -262,16 +262,61 @@
 <section class="section" id="install">
   <div class="section-label">Get Started</div>
   <h2 text="heading" reveal="bottom" balance style="margin-bottom:2rem;font-family:'Syne',sans-serif;">
-    Two lines. That's it.
+    Two lines. Any project.
   </h2>
 
   <div layout="stack" gap="md" reveal="bottom" reveal-delay="100">
-    <div class="code-block">
-      <span class="cmt">&lt;!-- Drop in your &lt;head&gt; --&gt;</span><br>
-      &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"https://unpkg.com/luxcss/dist/lux.css"</span>&gt;<br>
-      &lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="val">"https://unpkg.com/luxcss/dist/lux.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+
+    <!-- Tabs -->
+    <div tabs style="width:100%;max-width:640px">
+      <div tab-list>
+        <button tab>CDN</button>
+        <button tab>React / Vite</button>
+        <button tab>Next.js</button>
+        <button tab>Vue / Svelte</button>
+      </div>
+
+      <!-- CDN -->
+      <div tab-panel>
+        <div class="code-block" style="margin-top:1rem">
+          <span class="cmt">&lt;!-- Add to your &lt;head&gt; --&gt;</span><br>
+          &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"https://cdn.jsdelivr.net/npm/luxcss/dist/lux.css"</span>&gt;<br>
+          &lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="val">"https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+        </div>
+      </div>
+
+      <!-- React -->
+      <div tab-panel>
+        <div class="code-block" style="margin-top:1rem">
+          <span class="cmt">// src/main.jsx</span><br>
+          <span class="kw">import</span> <span class="val">'luxcss/dist/lux.css'</span>;<br>
+          <span class="kw">import</span> <span class="val">'luxcss/dist/lux.js'</span>;
+        </div>
+      </div>
+
+      <!-- Next.js -->
+      <div tab-panel>
+        <div class="code-block" style="margin-top:1rem">
+          <span class="cmt">// app/layout.tsx or pages/_app.tsx</span><br>
+          <span class="kw">import</span> <span class="val">'luxcss/dist/lux.css'</span>;<br>
+          <span class="kw">import</span> <span class="val">'luxcss/dist/lux.js'</span>;
+        </div>
+      </div>
+
+      <!-- Vue / Svelte -->
+      <div tab-panel>
+        <div class="code-block" style="margin-top:1rem">
+          <span class="cmt">// src/main.js or +layout.svelte</span><br>
+          <span class="kw">import</span> <span class="val">'luxcss/dist/lux.css'</span>;<br>
+          <span class="kw">import</span> <span class="val">'luxcss/dist/lux.js'</span>;
+        </div>
+      </div>
     </div>
-    <p text="caption" style="text-align:center">Or install via npm: <code>npm install luxcss</code></p>
+
+    <p text="caption" style="text-align:center">
+      Install via npm: <code>npm install luxcss</code> &nbsp;·&nbsp;
+      <a href="docs.html#frameworks" style="color:var(--lux-primary);opacity:0.8">Full framework guide →</a>
+    </p>
   </div>
 </section>
 

@@ -27,70 +27,40 @@ npm install luxcss
 
 ### React / Vite
 ```jsx
-// src/main.jsx
+// src/main.jsx — add these two lines, done
 import 'luxcss/dist/lux.css';
 import 'luxcss/dist/lux.js';
 ```
 
-### Next.js (App Router)
+### Next.js — App Router
 ```tsx
-// app/layout.tsx
+// app/layout.tsx — add these two lines, done
 import 'luxcss/dist/lux.css';
-```
-```tsx
-// components/LuxProvider.tsx
-'use client';
-import { useEffect } from 'react';
-
-export default function LuxProvider({ children }: { children: React.ReactNode }) {
-  useEffect(() => {
-    import('luxcss/dist/lux.js');
-  }, []);
-  return <>{children}</>;
-}
-```
-```tsx
-// app/layout.tsx — wrap your app
-import LuxProvider from '@/components/LuxProvider';
-export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <body><LuxProvider>{children}</LuxProvider></body>
-    </html>
-  );
-}
+import 'luxcss/dist/lux.js';
 ```
 
-### Next.js (Pages Router)
+### Next.js — Pages Router
 ```tsx
-// pages/_app.tsx
+// pages/_app.tsx — add these two lines, done
 import 'luxcss/dist/lux.css';
-import { useEffect } from 'react';
-
-export default function App({ Component, pageProps }) {
-  useEffect(() => { import('luxcss/dist/lux.js'); }, []);
-  return <Component {...pageProps} />;
-}
+import 'luxcss/dist/lux.js';
 ```
 
 ### Vue 3
 ```js
-// src/main.js
+// src/main.js — add these two lines, done
 import 'luxcss/dist/lux.css';
 import 'luxcss/dist/lux.js';
 ```
 
 ### SvelteKit
-```svelte
-<!-- src/routes/+layout.svelte -->
-<script>
-  import 'luxcss/dist/lux.css';
-  import { browser } from '$app/environment';
-  import { onMount } from 'svelte';
-  onMount(async () => { if (browser) await import('luxcss/dist/lux.js'); });
-</script>
-<slot />
+```js
+// src/routes/+layout.svelte — add these two lines, done
+import 'luxcss/dist/lux.css';
+import 'luxcss/dist/lux.js';
 ```
+
+> **That's it.** No providers, no useEffect, no extra config — just like Tailwind.
 
 ---
 
