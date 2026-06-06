@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lux — Attribute-First CSS & JS Library</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236366f1'/><text x='50%' y='54%' font-size='20' text-anchor='middle' dominant-baseline='middle' fill='white' font-family='system-ui' font-weight='900'>✦</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="lux.css" />
+
+  <style>
+    :root {
+      --lux-font-sans: 'DM Sans', system-ui, sans-serif;
+      --lux-font-display: 'Syne', sans-serif;
+      --lux-font-mono: 'Fira Code', monospace;
+    }
+
+    body { background: var(--lux-bg); }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--lux-border); border-radius: 99px; }
+
+    /* Nav */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.875rem 2rem;
+      background: rgba(15,15,19,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--lux-border);
+      z-index: 100;
+    }
+    .nav-logo { font-family: var(--lux-font-display); font-size: 1.3rem; font-weight: 800; letter-spacing: -0.03em; }
+    .nav-links { display: flex; align-items: center; gap: 0.5rem; }
+    .nav-link-hide { } /* visible by default */
+
+    /* Section labels */
+    .section { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--lux-font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--lux-primary);
+      opacity: 0.8;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Code block */
+    .code-block {
+      background: #0a0a10;
+      border: 1px solid var(--lux-border);
+      border-radius: var(--lux-r-lg);
+      padding: 1rem 1.25rem;
+      font-family: var(--lux-font-mono);
+      font-size: 0.82rem;
+      line-height: 1.8;
+      overflow-x: auto;
+      color: #c9d1d9;
+    }
+    .code-block .attr { color: #79c0ff; }
+    .code-block .val  { color: #a5d6ff; }
+    .code-block .tag  { color: #7ee787; }
+    .code-block .cmt  { color: #6a737d; font-style: italic; }
+
+    /* Grid demo cards */
+    .demo-card {
+      background: var(--lux-surface-1);
+      border: 1px solid var(--lux-border);
+      border-radius: var(--lux-r-lg);
+      padding: 1.25rem;
+      font-size: 0.85rem;
+    }
+
+    /* Divider */
+    .divider { border: none; border-top: 1px solid var(--lux-border); margin: 0; }
+
+    /* Attribute chip */
+    .chip {
+      display: inline-flex; align-items: center;
+      background: color-mix(in srgb, var(--lux-primary) 12%, transparent);
+      color: var(--lux-primary);
+      border: 1px solid color-mix(in srgb, var(--lux-primary) 25%, transparent);
+      border-radius: var(--lux-r-full);
+      padding: 0.2em 0.65em;
+      font-family: var(--lux-font-mono);
+      font-size: 0.72rem;
+      white-space: nowrap;
+    }
+
+    /* Hero grid background */
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--lux-border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--lux-border) 1px, transparent 1px);
+      background-size: 48px 48px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
+      opacity: 0.5;
+    }
+    .hero-glow {
+      position: absolute;
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse, color-mix(in srgb, var(--lux-primary) 20%, transparent), transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    /* Feature table */
+    .feat-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    .feat-table th { text-align: left; padding: 0.5rem 0.75rem; opacity: 0.5; font-weight: 500; border-bottom: 1px solid var(--lux-border); }
+    .feat-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .feat-table tr:last-child td { border-bottom: none; }
+
+    /* ── Mobile ───────────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      /* Nav — clean icon-only strip */
+      .nav { padding: 0.75rem 1.1rem; }
+      .nav-logo { font-size: 1.1rem; }
+      .nav-link-hide { display: none; }
+      .nav-links { gap: 0.35rem; }
+
+      /* Sections */
+      .section { padding: 3.5rem 1.1rem; }
+
+      /* Hero */
+      .hero-glow { width: 320px; height: 240px; }
+
+      /* Stats row — 2 columns on mobile */
+      .hero-stats { flex-wrap: wrap; gap: 1.5rem !important; justify-content: center !important; }
+
+      /* Feature cards — single column */
+      .feature-grid { grid-template-columns: 1fr !important; }
+
+      /* Buttons in hero — stack */
+      .hero-btns { flex-direction: column; align-items: stretch; width: 100%; max-width: 260px; margin: 0 auto; }
+      .hero-btns button { width: 100%; justify-content: center; }
+
+      /* Gradient cards — 2 col */
+      .gradient-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+      /* Motion cards — 2 col */
+      .motion-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+      /* Code blocks */
+      .code-block { font-size: 0.72rem; padding: 0.875rem 1rem; }
+
+      /* Interaction buttons — stack */
+      .interact-row { flex-direction: column !important; align-items: stretch !important; }
+      .interact-row button { width: 100%; justify-content: center; }
+
+      /* Modal max-width */
+      [modal] { padding: 1.25rem; }
+
+      /* Forms */
+      [input] { font-size: 0.9rem; }
+
+      /* CTA section */
+      .cta-btns { flex-direction: column; align-items: center; width: 100%; }
+      .cta-btns button { width: 100%; max-width: 260px; justify-content: center; }
+
+      /* Footer */
+      footer { padding: 1.5rem 1.1rem; }
+    }
+
+    @media (max-width: 400px) {
+      .nav-logo { font-size: 1rem; }
+      .version-chip-nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ──────────────────────────────────────────────────── -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo" text-gradient="electric" style="text-decoration:none;cursor:pointer">✦ lux</a>
+  <div class="nav-links">
+    <button class="nav-link-hide" surface="ghost" tone="primary" density="compact" radius="full"
+            smooth-scroll href="#features" style="font-size:0.82rem">Features</button>
+    <button class="nav-link-hide" surface="ghost" tone="primary" density="compact" radius="full"
+            smooth-scroll href="#components" style="font-size:0.82rem">Components</button>
+    <button class="nav-link-hide" surface="ghost" tone="primary" density="compact" radius="full"
+            smooth-scroll href="#effects" style="font-size:0.82rem">Effects</button>
+    <a href="docs.html" class="nav-link-hide" style="font-size:0.82rem;padding:0.375rem 0.75rem;border-radius:9999px;border:1px solid var(--lux-border);color:var(--lux-fg);opacity:0.7;transition:opacity 0.15s;text-decoration:none" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">Docs ↗</a>
+    <button surface="solid" tone="primary" density="compact" radius="full" ripple magnetic
+            onclick="navigator.clipboard.writeText('<link rel=\'stylesheet\' href=\'https://unpkg.com/luxcss/lux.css\'>\n<script src=\'https://unpkg.com/luxcss/lux.js\'><\/script>').then(()=>{ Lux.toast('Copied to clipboard!',{title:'Ready to use 🎉',type:'success'}); })"
+            style="font-size:0.82rem">Get Lux</button>
+    <button theme-toggle surface="ghost" tone="neutral" density="compact" radius="full"
+            tooltip="Toggle theme" tooltip-pos="bottom" style="font-size:0.82rem">◑</button>
+  </div>
+</nav>
+
+<!-- ── HERO ─────────────────────────────────────────────────── -->
+<section style="position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;padding-top:4rem;">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+
+  <div layout="stack" align="center" gap="lg" style="position:relative;text-align:center;max-width:760px;padding:2rem;">
+    <div reveal="scale">
+      <span badge="dot" tone="success" style="margin-bottom:1rem">v1.0.0 — Stable</span>
+    </div>
+
+    <h1 text="hero" balance reveal="bottom" reveal-delay="100"
+        style="font-family:'Syne',sans-serif;line-height:1;">
+      Style anything<br>
+      <span text-gradient="electric">with one attribute.</span>
+    </h1>
+
+    <p text="lead" reveal="bottom" reveal-delay="200" style="max-width:540px;opacity:0.65;">
+      Lux is a zero-dependency, attribute-first CSS + JS library.
+      Drop it in with a &lt;link&gt; tag. No build step. No classes to memorize.
+      Just HTML attributes that do everything.
+    </p>
+
+    <div class="hero-btns" layout="row" gap="sm" wrap reveal="bottom" reveal-delay="300" style="justify-content:center;">
+      <button surface="solid" tone="primary" radius="full" density="spacious" ripple magnetic motion="expressive"
+              confetti-trigger confetti-count="100">
+        ✦ Try Lux Free
+      </button>
+      <button surface="ghost" tone="neutral" radius="full" density="spacious" motion="subtle"
+              smooth-scroll href="#install">
+        View Install →
+      </button>
+    </div>
+
+    <!-- Stats -->
+    <div class="hero-stats" layout="row" gap="xl" reveal="bottom" reveal-delay="400" style="justify-content:center;margin-top:1rem;">
+      <div layout="stack" align="center" gap="xs">
+        <span text="heading" style="font-family:'Syne',sans-serif" tone="primary">
+          <span counter="200" counter-suffix="+" counter-duration="1800">0</span>
+        </span>
+        <span text="caption">Attributes</span>
+      </div>
+      <div layout="stack" align="center" gap="xs">
+        <span text="heading" style="font-family:'Syne',sans-serif">
+          <span counter="0" counter-suffix="kb" counter-from="0">~42</span>
+        </span>
+        <span text="caption">CSS + JS</span>
+      </div>
+      <div layout="stack" align="center" gap="xs">
+        <span text="heading" style="font-family:'Syne',sans-serif" tone="success">
+          <span counter="0">0</span>
+        </span>
+        <span text="caption">Dependencies</span>
+      </div>
+      <div layout="stack" align="center" gap="xs">
+        <span text="heading" style="font-family:'Syne',sans-serif">∞</span>
+        <span text="caption">Possibilities</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ── INSTALL ───────────────────────────────────────────────── -->
+<section class="section" id="install">
+  <div class="section-label">Get Started</div>
+  <h2 text="heading" reveal="bottom" balance style="margin-bottom:2rem;font-family:'Syne',sans-serif;">
+    Two lines. That's it.
+  </h2>
+
+  <div layout="stack" gap="md" reveal="bottom" reveal-delay="100">
+    <div class="code-block">
+      <span class="cmt">&lt;!-- Drop in your &lt;head&gt; --&gt;</span><br>
+      &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"https://unpkg.com/luxcss/dist/lux.css"</span>&gt;<br>
+      &lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="val">"https://unpkg.com/luxcss/dist/lux.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+    </div>
+    <p text="caption" style="text-align:center">Or install via npm: <code>npm install luxcss</code></p>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ── FEATURES ────────────────────────────────────────────────── -->
+<section class="section" id="features">
+  <div class="section-label">What's Included</div>
+  <h2 text="heading" balance reveal="bottom" style="margin-bottom:0.75rem;font-family:'Syne',sans-serif;">
+    Everything you need.<br>
+    <span text-gradient="electric">Nothing you don't.</span>
+  </h2>
+  <p text="lead" reveal="bottom" reveal-delay="100" style="margin-bottom:2.5rem;opacity:0.6;max-width:540px">
+    200+ attributes covering styling, layout, motion, components, and JS interactions — all from plain HTML.
+  </p>
+
+  <div layout="grid" cols="1" md-cols="2" lg-cols="3" gap="md" stagger="80">
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">🎨</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">11 Surface Types</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">solid, glass, frosted, ghost, matte, neon, outline, raised, ink, aurora, mesh — for every visual moment.</div>
+    </div>
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">✍️</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">Rich Typography</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">10 type presets, text gradients, stroke, glow, typewriter, fluid scaling, and truncation helpers.</div>
+    </div>
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">📐</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">Powerful Layouts</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">stack, row, grid, bento, masonry, sidebar, split, prose — with responsive column controls.</div>
+    </div>
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">🌈</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">18 Gradients</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">Named background and text gradients — sunset, ocean, aurora, neon, candy, electric, and more.</div>
+    </div>
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">✨</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">Motion & Animations</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">Hover effects, 12 looping animations, scroll reveal, stagger children, float, and spring physics.</div>
+    </div>
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">🧩</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">Ready Components</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">Modal, drawer, accordion, tabs, popover, toast, badges, tooltips, progress, and forms.</div>
+    </div>
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">⚡</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">JS Magic</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">Tilt 3D, magnetic, ripple, confetti, counter animation, typewriter, cursor trail — all via HTML attributes.</div>
+    </div>
+
+    <div surface="matte" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">🎭</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">Effects & Filters</div>
+      <div style="font-size:0.85rem;opacity:0.6;line-height:1.6">Glow, ring, blur, backdrop, patterns, masks, clip paths, blend modes, and CSS filters.</div>
+    </div>
+
+    <div surface="neon" tone="primary" radius="xl" density="spacious" spotlight motion="subtle">
+      <div style="font-size:1.5rem;margin-bottom:0.75rem">🪶</div>
+      <div style="font-weight:700;font-family:'Syne',sans-serif;margin-bottom:0.4rem">~52kb. Zero deps.</div>
+      <div style="font-size:0.85rem;opacity:0.8;line-height:1.6">CSS + JS combined. No build step. No dependencies. Drop in two tags and go.</div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ── SURFACES ──────────────────────────────────────────────── -->
+<section class="section" id="components">
+  <div class="section-label">Surfaces</div>
+  <h2 text="heading" reveal="bottom" balance style="margin-bottom:2rem;font-family:'Syne',sans-serif;">
+    Materials for every moment.
+  </h2>
+
+  <div layout="grid" cols="2" md-cols="4" gap="md" stagger="100">
+    <div surface="solid"   tone="primary" radius="xl" density="spacious" text-align="center">Solid</div>
+    <div surface="glass"   radius="xl" density="spacious" text-align="center">Glass</div>
+    <div surface="frosted" radius="xl" density="spacious" text-align="center">Frosted</div>
+    <div surface="matte"   radius="xl" density="spacious" text-align="center">Matte</div>
+    <div surface="ghost"   tone="accent" radius="xl" density="spacious" text-align="center">Ghost</div>
+    <div surface="neon"    tone="primary" radius="xl" density="spacious" text-align="center">Neon</div>
+    <div surface="aurora"  radius="xl" density="spacious" text-align="center">Aurora</div>
+    <div surface="ink"     radius="xl" density="spacious" text-align="center">Ink</div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ── GRADIENTS ─────────────────────────────────────────────── -->
+<section class="section">
+  <div class="section-label">Gradients</div>
+  <h2 text="heading" reveal="bottom" balance style="margin-bottom:2rem;font-family:'Syne',sans-serif;">18 ready-made gradients.</h2>
+
+  <div layout="grid" cols="2" md-cols="4" lg-cols="6" gap="sm" stagger="60">
+    <div gradient="sunset"   radius="lg" style="height:80px;display:flex;align-items:flex-end;padding:0.5rem 0.75rem;font-size:0.75rem;font-weight:600;color:#fff">Sunset</div>
+    <div gradient="ocean"    radius="lg" style="height:80px;display:flex;align-items:flex-end;padding:0.5rem 0.75rem;font-size:0.75rem;font-weight:600;color:#fff">Ocean</div>
+    <div gradient="aurora"   radius="lg" style="height:80px;display:flex;align-items:flex-end;padding:0.5rem 0.75rem;font-size:0.75rem;font-weight:600;color:#fff">Aurora</div>
+    <div gradient="fire"     radius="lg" style="height:80px;display:flex;align-items:flex-end;padding:0.5rem 0.75rem;font-size:0.75rem;font-weight:600;color:#fff">Fire</div>
+    <div gradient="midnight" radius="lg" style="height:80px;display:flex;align-items:flex-end;padding:0.5rem 0.75rem;font-size:0.75rem;font-weight:600;color:#fff">Midnight</div>
+    <div gradient="neon"     radius="lg" style="height:80px;display:flex;align-items:flex-end;padding:0.5rem 0.75rem;font-size:0.75rem;font-weight:600;color:#000">Neon</div>
+    <div gradient="candy"    radius="lg" style="height:80px;display:flex;align-items:flex-end;padding:0.5rem 0.75rem;font-size:0.75rem;font-weight:600;color:#fff">Candy</div>
+    <div gradient="gold"     radius="lg" style="height:80px;display:flex;align-items:flex-end;padding:0.5rem 0.75rem;font-size:0.75rem;font-weight:600;color:#fff">Gold</div>
+    <div gradient="cosmos"   radius="lg" style="height:80px;display:flex;align-items:flex-end;padding:0.5rem 0.75rem;font-size:0.75rem;font-weight:600;color:#fff">Cosmos</div>
+    <div gradient="electric" radius="lg" style="height:80px;display:flex;align-items:flex-end;padding:0.5rem 0.75rem;font-size:0.75rem;font-weight:600;color:#fff">Electric</div>
+    <div gradient="forest"   radius="lg" style="height:80px;display:flex;align-items:flex-end;padding:0.5rem 0.75rem;font-size:0.75rem;font-weight:600;color:#fff">Forest</div>
+    <div gradient="peach"    radius="lg" style="height:80px;display:flex;align-items:flex-end;padding:0.5rem 0.75rem;font-size:0.75rem;font-weight:600;color:#fff">Peach</div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ── EFFECTS ────────────────────────────────────────────────── -->
+<section class="section" id="effects">
+  <div class="section-label">Effects</div>
+  <h2 text="heading" reveal="bottom" balance style="margin-bottom:2rem;font-family:'Syne',sans-serif;">
+    Visual magic. One attribute.
+  </h2>
+
+  <div layout="grid" cols="1" md-cols="2" gap="lg">
+
+    <!-- Text effects -->
+    <div layout="stack" gap="md" reveal="left">
+      <div class="section-label">Text Gradients</div>
+      <div text="heading" text-gradient="sunset"  style="font-family:'Syne',sans-serif">Sunset Headline</div>
+      <div text="heading" text-gradient="ocean"   style="font-family:'Syne',sans-serif">Ocean Headline</div>
+      <div text="heading" text-gradient="neon"    style="font-family:'Syne',sans-serif">Neon Headline</div>
+      <div text="heading" text-gradient="fire"    style="font-family:'Syne',sans-serif">Fire Headline</div>
+    </div>
+
+    <!-- Typewriter -->
+    <div layout="stack" gap="md" reveal="right">
+      <div class="section-label">Typewriter</div>
+      <div surface="matte" radius="xl" density="spacious">
+        <p text="heading" typewriter typewriter-speed="60" typewriter-cursor
+           style="font-family:'Syne',sans-serif;min-height:2em">
+          Building the future of CSS.
+        </p>
+      </div>
+
+      <div class="section-label" style="margin-top:0.5rem">Glow</div>
+      <div layout="row" gap="md" align="center">
+        <div tone="primary" text-glow glow="pulse" surface="matte" radius="xl" density="compact">Primary Glow</div>
+        <div tone="accent"  text-glow glow="pulse" surface="matte" radius="xl" density="compact">Accent Glow</div>
+        <div tone="success" text-glow glow="pulse" surface="matte" radius="xl" density="compact">Success</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ── INTERACTIVE COMPONENTS ────────────────────────────────── -->
+<section class="section">
+  <div class="section-label">Components</div>
+  <h2 text="heading" reveal="bottom" balance style="margin-bottom:2rem;font-family:'Syne',sans-serif;">
+    No JS framework required.
+  </h2>
+
+  <div layout="grid" cols="1" md-cols="2" gap="xl">
+
+    <!-- Accordion -->
+    <div reveal="left">
+      <div class="section-label" style="margin-bottom:1rem">Accordion</div>
+      <div accordion>
+        <div accordion-item>
+          <button accordion-trigger>What is Lux?</button>
+          <div accordion-content>
+            <p text="body" style="opacity:0.75;padding-bottom:0.25rem">
+              Lux is an attribute-first CSS + JS library. Style and interact with HTML elements purely through attributes — no class names needed.
+            </p>
+          </div>
+        </div>
+        <div accordion-item>
+          <button accordion-trigger>How is it different from Tailwind?</button>
+          <div accordion-content>
+            <p text="body" style="opacity:0.75;padding-bottom:0.25rem">
+              Tailwind uses utility classes. Lux uses semantic HTML attributes. Your markup stays clean and readable, and you get JS-powered interactions for free.
+            </p>
+          </div>
+        </div>
+        <div accordion-item>
+          <button accordion-trigger>Does it need a build step?</button>
+          <div accordion-content>
+            <p text="body" style="opacity:0.75;padding-bottom:0.25rem">
+              Zero. Drop a &lt;link&gt; and &lt;script&gt; tag in your HTML and you're live. Works in React, Vue, Svelte, or plain HTML.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div reveal="right">
+      <div class="section-label" style="margin-bottom:1rem">Tabs</div>
+      <div tabs>
+        <div tab-list>
+          <button tab>Overview</button>
+          <button tab>Usage</button>
+          <button tab>API</button>
+        </div>
+        <div tab-panel>
+          <p text="body" style="opacity:0.75">Lux ships with built-in tab panels. Click a tab above to switch. Panels animate in with a smooth slide-up. No JS needed on your end.</p>
+        </div>
+        <div tab-panel>
+          <div class="code-block">
+&lt;<span class="tag">div</span> <span class="attr">tabs</span>&gt;<br>
+  &lt;<span class="tag">div</span> <span class="attr">tab-list</span>&gt;<br>
+    &lt;<span class="tag">button</span> <span class="attr">tab</span>&gt;One&lt;/<span class="tag">button</span>&gt;<br>
+    &lt;<span class="tag">button</span> <span class="attr">tab</span>&gt;Two&lt;/<span class="tag">button</span>&gt;<br>
+  &lt;/<span class="tag">div</span>&gt;<br>
+  &lt;<span class="tag">div</span> <span class="attr">tab-panel</span>&gt;...&lt;/<span class="tag">div</span>&gt;<br>
+  &lt;<span class="tag">div</span> <span class="attr">tab-panel</span>&gt;...&lt;/<span class="tag">div</span>&gt;<br>
+&lt;/<span class="tag">div</span>&gt;
+          </div>
+        </div>
+        <div tab-panel>
+          <p text="body" style="opacity:0.75">Access the JS API: <code>Lux.toast(msg, opts)</code>, <code>Lux.confetti(opts)</code>, <code>Lux.openModal(el)</code>, and more.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ── MODAL + DRAWER + TOAST DEMO ───────────────────────────── -->
+<section class="section">
+  <div class="section-label">Interactions</div>
+  <h2 text="heading" reveal="bottom" balance style="margin-bottom:2rem;font-family:'Syne',sans-serif;">Click to see the magic.</h2>
+
+  <div class="interact-row" layout="row" gap="md" wrap stagger="80">
+    <!-- Modal -->
+    <button surface="solid"  tone="primary" radius="full" density="spacious" ripple magnetic motion="expressive"
+            modal-open="demo-modal">Open Modal ↗</button>
+
+    <!-- Drawer -->
+    <button surface="ghost"  tone="primary" radius="full" density="spacious" ripple magnetic motion="expressive"
+            drawer-open="demo-drawer">Open Drawer →</button>
+
+    <!-- Toast demos -->
+    <button surface="matte" radius="full" density="spacious" ripple motion="subtle"
+            toast-trigger toast-title="Success!" toast-msg="Your changes were saved." toast-type="success">
+      ✓ Toast Success
+    </button>
+    <button surface="matte" radius="full" density="spacious" ripple motion="subtle"
+            toast-trigger toast-title="Warning" toast-msg="This action cannot be undone." toast-type="warning">
+      ⚠ Toast Warning
+    </button>
+    <button surface="matte" radius="full" density="spacious" ripple motion="subtle"
+            toast-trigger toast-title="Error" toast-msg="Something went wrong." toast-type="danger">
+      ✕ Toast Error
+    </button>
+
+    <!-- Confetti -->
+    <button surface="aurora" radius="full" density="spacious" ripple magnetic
+            confetti-trigger confetti-count="120">
+      🎉 Confetti!
+    </button>
+  </div>
+</section>
+
+<!-- Modal -->
+<div modal-backdrop id="demo-modal">
+  <div modal-wrapper>
+    <button modal-close>✕</button>
+    <div modal>
+      <div layout="stack" gap="md">
+        <h2 text="heading" style="font-family:'Syne',sans-serif" text-gradient="electric">Hello from Lux!</h2>
+        <p text="body" style="opacity:0.7">
+          This modal was created with zero JavaScript on your end.
+          Just add <code>modal-backdrop</code> and <code>modal</code> attributes, and a button with <code>modal-open</code>.
+          Lux handles the rest — animations, backdrop blur, ESC key, and focus management.
+        </p>
+        <div class="code-block">
+&lt;<span class="tag">div</span> <span class="attr">modal-backdrop</span> <span class="attr">id</span>=<span class="val">"my-modal"</span>&gt;<br>
+  &lt;<span class="tag">div</span> <span class="attr">modal-wrapper</span>&gt;<br>
+    &lt;<span class="tag">button</span> <span class="attr">modal-close</span>&gt;✕&lt;/<span class="tag">button</span>&gt;<br>
+    &lt;<span class="tag">div</span> <span class="attr">modal</span>&gt;Your content here&lt;/<span class="tag">div</span>&gt;<br>
+  &lt;/<span class="tag">div</span>&gt;<br>
+&lt;/<span class="tag">div</span>&gt;
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Drawer -->
+<div drawer-backdrop id="demo-drawer">
+  <div drawer drawer-side="right">
+    <div layout="stack" gap="md">
+      <div layout="row" justify="between" align="center">
+        <h3 text="subheading" style="font-family:'Syne',sans-serif">Lux Drawer</h3>
+        <button drawer-close surface="ghost" tone="neutral" density="compact" radius="full">✕</button>
+      </div>
+      <p text="body" style="opacity:0.7">
+        Drawers slide in from any side: <code>right</code>, <code>left</code>, <code>top</code>, or <code>bottom</code>.
+        Just set <code>drawer-side="right"</code>.
+      </p>
+      <hr class="divider" />
+      <div layout="stack" gap="sm">
+        <div surface="matte" radius="lg" density="compact" layout="row" gap="sm" align="center">
+          <span tone="primary">◆</span> Dashboard
+        </div>
+        <div surface="matte" radius="lg" density="compact" layout="row" gap="sm" align="center">
+          <span tone="success">◆</span> Analytics
+        </div>
+        <div surface="matte" radius="lg" density="compact" layout="row" gap="sm" align="center">
+          <span tone="warning">◆</span> Settings
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" />
+
+<!-- ── MOTION ─────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="section-label">Motion</div>
+  <h2 text="heading" reveal="bottom" balance style="margin-bottom:2rem;font-family:'Syne',sans-serif;">Hover these cards.</h2>
+
+  <div layout="grid" cols="2" md-cols="4" gap="md" stagger="80">
+    <div surface="matte" radius="xl" density="spacious" motion="subtle" text-align="center">
+      <div text="heading">👋</div>
+      <div text="label" style="margin-top:0.5rem;opacity:0.6">Subtle</div>
+    </div>
+    <div surface="matte" radius="xl" density="spacious" motion="expressive" text-align="center">
+      <div text="heading">✨</div>
+      <div text="label" style="margin-top:0.5rem;opacity:0.6">Expressive</div>
+    </div>
+    <div surface="matte" radius="xl" density="spacious" motion="dramatic" text-align="center">
+      <div text="heading">🚀</div>
+      <div text="label" style="margin-top:0.5rem;opacity:0.6">Dramatic</div>
+    </div>
+    <div surface="matte" radius="xl" density="spacious" tilt tilt-glare text-align="center">
+      <div text="heading">🎮</div>
+      <div text="label" style="margin-top:0.5rem;opacity:0.6">Tilt 3D</div>
+    </div>
+  </div>
+
+  <div layout="row" gap="md" wrap style="margin-top:2rem;" stagger="80">
+    <div surface="matte" radius="full" density="compact" animate="bounce" style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">⬆</div>
+    <div surface="matte" radius="full" density="compact" animate="spin"   style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">⟳</div>
+    <div surface="matte" radius="full" density="compact" animate="pulse"  style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">●</div>
+    <div surface="matte" radius="full" density="compact" animate="wiggle" style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">↔</div>
+    <div surface="matte" radius="full" density="compact" animate="ping"   style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">○</div>
+    <div surface="matte" radius="full" density="compact" animate="heartbeat" style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">❤</div>
+    <div float="slow" surface="solid" tone="primary" radius="full" style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">↑</div>
+    <div float="med"  surface="solid" tone="accent"  radius="full" style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">↑</div>
+    <div float="fast" surface="solid" tone="success" radius="full" style="width:48px;height:48px;display:flex;align-items:center;justify-content:center;">↑</div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ── POPOVER + BADGES + PROGRESS ───────────────────────────── -->
+<section class="section">
+  <div class="section-label">More Components</div>
+  <div layout="grid" cols="1" md-cols="3" gap="xl">
+
+    <!-- Popover -->
+    <div layout="stack" gap="md" reveal="bottom">
+      <div class="section-label">Popover</div>
+      <div popover-trigger style="display:inline-block">
+        <button surface="matte" radius="full" density="default" ripple>Click for Popover ↓</button>
+        <div popover-panel>
+          <div layout="stack" gap="sm">
+            <div text="label">Quick Actions</div>
+            <div surface="matte" radius="md" density="compact" motion="subtle" style="cursor:pointer">✏ Edit item</div>
+            <div surface="matte" radius="md" density="compact" motion="subtle" style="cursor:pointer">📋 Duplicate</div>
+            <div surface="matte" radius="md" density="compact" motion="subtle" tone="danger" style="cursor:pointer;color:var(--lux-danger)">🗑 Delete</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Badges -->
+    <div layout="stack" gap="sm" reveal="bottom" reveal-delay="100">
+      <div class="section-label">Badges</div>
+      <div layout="row" gap="sm" wrap>
+        <span badge tone="primary">Primary</span>
+        <span badge tone="success">Success</span>
+        <span badge tone="danger">Danger</span>
+        <span badge tone="warning">Warning</span>
+        <span badge tone="info">Info</span>
+        <span badge="dot" tone="primary">Live</span>
+        <span badge="counter" tone="danger">99+</span>
+        <span badge="pill" tone="accent">New</span>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div layout="stack" gap="md" reveal="bottom" reveal-delay="200">
+      <div class="section-label">Progress</div>
+      <div layout="stack" gap="md">
+        <div>
+          <div layout="row" justify="between" style="margin-bottom:0.4rem;font-size:0.8rem;opacity:0.6"><span>Design</span><span>80%</span></div>
+          <div progress tone="primary"><div progress-bar style="width:80%"></div></div>
+        </div>
+        <div>
+          <div layout="row" justify="between" style="margin-bottom:0.4rem;font-size:0.8rem;opacity:0.6"><span>Dev</span><span>60%</span></div>
+          <div progress tone="info"><div progress-bar style="width:60%"></div></div>
+        </div>
+        <div>
+          <div layout="row" justify="between" style="margin-bottom:0.4rem;font-size:0.8rem;opacity:0.6"><span>Launch</span><span>35%</span></div>
+          <div progress="striped" tone="success"><div progress-bar style="width:35%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ── FORMS ──────────────────────────────────────────────────── -->
+<section class="section">
+  <div class="section-label">Forms</div>
+  <h2 text="heading" reveal="bottom" balance style="margin-bottom:2rem;font-family:'Syne',sans-serif;">Beautiful forms. Zero config.</h2>
+
+  <div surface="matte" radius="xl" density="spacious" style="max-width:520px" reveal="bottom">
+    <div layout="stack" gap="md">
+      <div field>
+        <label>Full Name</label>
+        <input input type="text" placeholder="Your name" />
+        <span hint>This is how you'll appear publicly.</span>
+      </div>
+      <div field>
+        <label>Email</label>
+        <input input type="email" placeholder="you@example.com" />
+      </div>
+      <div field>
+        <label>Message</label>
+        <textarea input="textarea" placeholder="Say something..."></textarea>
+      </div>
+      <div field>
+        <label>Volume</label>
+        <input input="range" type="range" min="0" max="100" value="60" />
+      </div>
+      <div layout="row" gap="md" align="center">
+        <input input="checkbox" type="checkbox" id="agree" />
+        <label for="agree" style="font-size:0.875rem">I agree to the terms</label>
+      </div>
+      <button surface="solid" tone="primary" radius="full" density="spacious" ripple magnetic w="full"
+              toast-trigger toast-title="Submitted!" toast-msg="We'll be in touch soon." toast-type="success">
+        Submit →
+      </button>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ── CTA ────────────────────────────────────────────────────── -->
+<section style="padding:6rem 1.5rem;text-align:center;position:relative;overflow:hidden;">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 50%,color-mix(in srgb,var(--lux-primary) 12%,transparent),transparent);pointer-events:none;"></div>
+  <div layout="stack" align="center" gap="lg" style="position:relative;max-width:600px;margin:0 auto;" stagger="120">
+    <span badge="dot" tone="success">Open Source — MIT</span>
+    <h2 text="hero" balance style="font-family:'Syne',sans-serif;font-size:clamp(2rem,5vw,4rem)">
+      Start building<br><span text-gradient="electric">with Lux today.</span>
+    </h2>
+    <p text="lead" style="opacity:0.65">
+      Drop two lines in your HTML. Style everything with attributes.<br>Ship faster than ever.
+    </p>
+    <div class="cta-btns" layout="row" gap="sm" justify="center">
+      <button surface="solid" tone="primary" radius="full" density="spacious" ripple magnetic motion="expressive"
+              confetti-trigger confetti-count="150">
+        ✦ Get Started Free
+      </button>
+      <button surface="ghost" tone="neutral" radius="full" density="spacious" motion="subtle">
+        GitHub ↗
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ─────────────────────────────────────────────────── -->
+<footer style="border-top:1px solid var(--lux-border);padding:2rem;text-align:center;">
+  <span text="caption">
+    ✦ Lux v1.0.0 — Built to outshine everything.
+    <a href="#" style="color:var(--lux-primary);text-decoration:none;margin-left:0.5rem">MIT License</a>
+  </span>
+</footer>
+
+<script src="lux.js"></script>
+</body>
+</html>

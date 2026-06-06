@@ -1,10 +1,16 @@
 /*!
- * LUX — JavaScript Runtime v1.0.0
+ * LUX — JavaScript Runtime v1.0.1
  * Handles: reveal, accordion, tabs, modal, drawer, popover,
  *          toast, tilt, magnetic, confetti, cursor trail,
  *          counter animation, marquee, theme toggle,
  *          parallax, scroll progress, seed color, and more.
  */
+
+// SSR safety — do nothing if running outside a browser (Next.js, SSR, Node)
+if (typeof window === 'undefined' || typeof document === 'undefined') {
+  if (typeof module !== 'undefined') module.exports = {};
+} else {
+
 (function (global) {
   "use strict";
 
@@ -389,7 +395,7 @@
           ctx.fillStyle = `rgba(${rgb}, ${p.life * 0.6})`;
           ctx.fill();
           p.life *= 0.92;
-         });
+        });
       }
       raf(drawTrail);
     }
@@ -913,3 +919,5 @@
   // Expose globally
   global.Lux = Lux;
 })(window);
+
+} // end SSR browser check

@@ -1,9 +1,10 @@
 {
   "name": "luxcss",
   "version": "1.0.1",
-  "description": "Lux — The attribute-first CSS + JS styling library. More powerful than useaura, zero dependencies.",
+  "description": "Attribute-first CSS & JS library. Style anything with one HTML attribute. Zero dependencies, no build step.",
   "main": "dist/lux.js",
   "style": "dist/lux.css",
+  "types": "dist/lux.d.ts",
   "files": [
     "dist/",
     "README.md",
@@ -18,15 +19,21 @@
     "components",
     "zero-dependency",
     "lux",
-    "design-system"
+    "design-system",
+    "html",
+    "frontend",
+    "ui"
   ],
   "author": "Abideen",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/abideen-program/luxcss.git"
+    "url": "git+https://github.com/Abideen-program/luxcss.git"
   },
   "homepage": "https://abideen-program.github.io/luxcss/",
+  "bugs": {
+    "url": "https://github.com/Abideen-program/luxcss/issues"
+  },
   "scripts": {
     "build": "echo 'No build step needed — dist/ is the source'",
     "prepublishOnly": "npm run build"
@@ -40,5 +47,9 @@
     },
     "./css": "./dist/lux.css",
     "./js": "./dist/lux.js"
-  }
+  },
+  "sideEffects": [
+    "dist/lux.css",
+    "dist/lux.js"
+  ]
 }

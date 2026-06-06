@@ -1,36 +1,118 @@
 # ✦ Lux — Attribute-First CSS & JS Library
 
-> Style anything with one attribute. Zero dependencies. Zero build step.
+> Style anything with one HTML attribute. Zero dependencies. Zero build step.
 
-Lux is a drop-in CSS + JS styling library that lets you build beautiful, interactive UIs purely through HTML attributes — no class names, no JavaScript frameworks, no config files.
-
-[![npm version](https://img.shields.io/npm/v/luxcss.svg)](https://www.npmjs.com/package/luxcss)
-[![npm downloads](https://img.shields.io/npm/dm/luxcss.svg)](https://www.npmjs.com/package/luxcss)
-[![CI](https://github.com/Abideen-program/luxcss/actions/workflows/ci.yml/badge.svg)](https://github.com/Abideen-program/luxcss/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+🌐 **Live Demo:** https://abideen-program.github.io/luxcss/
+📖 **Docs:** https://abideen-program.github.io/luxcss/docs.html
+📦 **npm:** https://www.npmjs.com/package/luxcss
 
 ---
 
-📖 **[Documentation](https://abideen-program.github.io/luxcss/)** — full API reference, examples, and quick start guide.
-
 ## ⚡ Quick Start
 
+### CDN (Plain HTML — simplest)
 ```html
-<!-- Drop in your <head> -->
-<link rel="stylesheet" href="https://unpkg.com/luxcss/dist/lux.css" />
-<script src="https://unpkg.com/luxcss/dist/lux.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luxcss/dist/lux.css"/>
+<script src="https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"></script>
 ```
 
-Or via npm:
+### npm
 ```bash
 npm install luxcss
 ```
 
-That's it. Start using attributes immediately.
+---
+
+## 🚀 Framework Setup
+
+### React / Vite
+```jsx
+// src/main.jsx
+import 'luxcss/dist/lux.css';
+import 'luxcss/dist/lux.js';
+```
+
+### Next.js (App Router)
+```tsx
+// app/layout.tsx
+import 'luxcss/dist/lux.css';
+```
+```tsx
+// components/LuxProvider.tsx
+'use client';
+import { useEffect } from 'react';
+
+export default function LuxProvider({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    import('luxcss/dist/lux.js');
+  }, []);
+  return <>{children}</>;
+}
+```
+```tsx
+// app/layout.tsx — wrap your app
+import LuxProvider from '@/components/LuxProvider';
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body><LuxProvider>{children}</LuxProvider></body>
+    </html>
+  );
+}
+```
+
+### Next.js (Pages Router)
+```tsx
+// pages/_app.tsx
+import 'luxcss/dist/lux.css';
+import { useEffect } from 'react';
+
+export default function App({ Component, pageProps }) {
+  useEffect(() => { import('luxcss/dist/lux.js'); }, []);
+  return <Component {...pageProps} />;
+}
+```
+
+### Vue 3
+```js
+// src/main.js
+import 'luxcss/dist/lux.css';
+import 'luxcss/dist/lux.js';
+```
+
+### SvelteKit
+```svelte
+<!-- src/routes/+layout.svelte -->
+<script>
+  import 'luxcss/dist/lux.css';
+  import { browser } from '$app/environment';
+  import { onMount } from 'svelte';
+  onMount(async () => { if (browser) await import('luxcss/dist/lux.js'); });
+</script>
+<slot />
+```
 
 ---
 
-## ✦ What's Included
+## ✦ Usage
+
+After setup, add attributes to any HTML element:
+
+```html
+<!-- Glass card with animated title and a confetti button -->
+<div surface="glass" radius="xl" density="spacious" motion="expressive">
+  <span badge="dot" tone="success">Live</span>
+  <h2 text="heading" text-gradient="electric">Hello Lux</h2>
+  <p text="body">One attribute per feature.</p>
+  <button surface="solid" tone="primary" radius="full" ripple magnetic confetti-trigger>
+    Celebrate 🎉
+  </button>
+</div>
+```
+
+---
+
+## 🎨 What's Included
 
 | Category | Attributes |
 |---|---|
@@ -38,23 +120,19 @@ That's it. Start using attributes immediately.
 | **Color** | `tone=` — primary, danger, success, warning, info, accent, neutral |
 | **Typography** | `text=` — hero, display, heading, subheading, lead, body, caption, label, code, overline |
 | **Text FX** | `text-gradient=`, `text-stroke=`, `text-glow`, `text-shadow=`, `truncate=`, `balance`, `fluid=` |
-| **Layout** | `layout=` — stack, row, cluster, grid, center, cover, sidebar, masonry, prose, split, bento, holy-grail |
-| **Grid** | `cols=`, `span=`, `sm-cols=`, `md-cols=`, `lg-cols=`, `xl-cols=`, `gap=`, `align=`, `justify=` |
+| **Layout** | `layout=` — stack, row, grid, center, cover, sidebar, masonry, prose, split, bento |
+| **Grid** | `cols=`, `span=`, `sm-cols=`, `md-cols=`, `lg-cols=`, `gap=`, `align=`, `justify=` |
 | **Motion** | `motion=` — subtle, expressive, dramatic, press |
 | **Animations** | `animate=` — spin, pulse, bounce, wiggle, shake, ping, heartbeat, rubber, flip, swing, tada |
 | **Reveal** | `reveal=` — bottom, top, left, right, scale, blur, rotate, flip |
-| **Spring** | `spring=` — default, bouncy, gentle |
-| **Float** | `float=` — slow, med, fast |
 | **Gradients** | 18 named gradients — sunset, ocean, aurora, fire, neon, candy, gold, cosmos, electric… |
 | **Glow & Ring** | `glow=`, `text-glow`, `ring=`, `shadow=colored` |
-| **Patterns** | `pattern=` — grid, dots, stripes, crosshatch, checker, diamonds, hexagon, noise |
+| **Patterns** | `pattern=` — grid, dots, stripes, crosshatch, checker, diamonds, hexagon |
 | **Masks** | `mask=` — fade-bottom, fade-top, fade-x, vignette, circle, spotlight |
-| **Clip Paths** | `clip=` — circle, ellipse, diamond, hex, star, arrow, notch, chevron, slant-r/l, wave |
 | **Filters** | `filter=`, `backdrop=` — blur, grayscale, sepia, vintage, dreamy… |
 | **Forms** | `input=`, `field=`, `hint=` |
 | **Components** | Accordion, Tabs, Modal, Drawer, Popover, Toast, Progress, Badges, Tooltips |
-| **JS Magic** | Confetti, Cursor trail, Magnetic, Tilt 3D, Typewriter, Ripple, Counter, Spotlight, Custom cursor |
-| **Utils** | `elevation=`, `layer=`, `aspect=`, `blend=`, `opacity=`, `pos=`, `z=`, stagger, reveal-delay |
+| **JS Magic** | Confetti, Cursor trail, Magnetic, Tilt 3D, Typewriter, Ripple, Counter, Spotlight |
 
 ---
 
@@ -65,7 +143,7 @@ That's it. Start using attributes immediately.
 <div surface="glass">Glass card</div>
 <div surface="neon" tone="primary">Neon card</div>
 <div surface="aurora">Animated aurora</div>
-<div surface="solid" tone="success">Success button</div>
+<div surface="solid" tone="success">Solid button</div>
 ```
 
 ### Layout
@@ -75,41 +153,22 @@ That's it. Start using attributes immediately.
   <div surface="matte">Card 2</div>
   <div surface="matte">Card 3</div>
 </div>
-
-<div layout="row" gap="md" align="center" justify="between">
-  <h2 text="heading">Title</h2>
-  <button surface="solid" tone="primary">Action</button>
-</div>
 ```
 
 ### Typography
 ```html
 <h1 text="hero" text-gradient="electric">Hero Heading</h1>
-<h2 text="heading" balance>Section Heading</h2>
-<p text="lead">A lead paragraph with comfortable line-height.</p>
-<p text="body">Regular body text for reading.</p>
-<span text="label">LABEL</span>
+<h2 text="heading" balance>Section Title</h2>
+<p text="lead">Intro paragraph.</p>
 <code text="code">const x = 42;</code>
 ```
 
 ### Motion
 ```html
-<!-- Hover effects -->
-<div motion="subtle">Subtle lift on hover</div>
-<div motion="expressive">Expressive spring on hover</div>
-<div motion="dramatic">Dramatic scale + rotate</div>
-
-<!-- 3D tilt on hover -->
-<div tilt tilt-glare>Tilt me!</div>
-
-<!-- Magnetic button -->
-<button magnetic surface="solid" tone="primary">Magnetic</button>
-
-<!-- Scroll-triggered reveal -->
-<div reveal="bottom">Fades in from below on scroll</div>
-<div reveal="scale" reveal-delay="200">Scales in with delay</div>
-
-<!-- Stagger children automatically -->
+<div motion="expressive">Spring hover effect</div>
+<div tilt tilt-glare>3D tilt on hover</div>
+<button magnetic ripple surface="solid" tone="primary">Magnetic</button>
+<div reveal="bottom">Fades in on scroll</div>
 <div layout="grid" cols="3" stagger="100">
   <div surface="matte">1</div>
   <div surface="matte">2</div>
@@ -117,87 +176,41 @@ That's it. Start using attributes immediately.
 </div>
 ```
 
-### Animations
-```html
-<div animate="spin">⟳</div>
-<div animate="bounce">⬆</div>
-<div animate="pulse">●</div>
-<div animate="heartbeat">❤</div>
-<div animate="wiggle">↔</div>
-<div float="slow">Floating element</div>
-```
-
-### Accordion
-```html
-<div accordion>
-  <div accordion-item>
-    <button accordion-trigger>Question?</button>
-    <div accordion-content>Answer here.</div>
-  </div>
-</div>
-```
-
-### Tabs
-```html
-<div tabs>
-  <div tab-list>
-    <button tab>Tab 1</button>
-    <button tab>Tab 2</button>
-  </div>
-  <div tab-panel>Content 1</div>
-  <div tab-panel>Content 2</div>
-</div>
-```
-
 ### Modal
 ```html
 <button modal-open="my-modal">Open</button>
-
 <div modal-backdrop id="my-modal">
-  <div modal>
+  <div modal-wrapper>
     <button modal-close>✕</button>
-    <h2 text="heading">Modal Title</h2>
-    <p>Modal content here.</p>
-  </div>
-</div>
-```
-
-### Drawer
-```html
-<button drawer-open="my-drawer">Open Drawer</button>
-
-<div drawer-backdrop id="my-drawer">
-  <div drawer drawer-side="right">
-    <button drawer-close>✕</button>
-    Drawer content
+    <div modal>
+      <h2 text="heading">Modal Title</h2>
+      <p>Content here.</p>
+    </div>
   </div>
 </div>
 ```
 
 ### Toast
 ```html
-<!-- HTML attribute trigger -->
-<button
-  toast-trigger
-  toast-title="Done!"
-  toast-msg="Your file was saved."
-  toast-type="success"
->Save</button>
+<!-- Via HTML -->
+<button toast-trigger toast-title="Done!" toast-msg="Saved." toast-type="success">
+  Save
+</button>
 
-<!-- Or via JS -->
+<!-- Via JS -->
 <script>
-  Lux.toast("File saved!", { title: "Done!", type: "success" });
+  Lux.toast('Saved!', { title: 'Done!', type: 'success' });
 </script>
 ```
 
 ### Confetti
 ```html
 <button confetti-trigger confetti-count="100">🎉 Celebrate!</button>
+```
 
-<!-- Or via JS -->
-<script>
-  Lux.confetti({ count: 80 });
-</script>
+### Counter Animation
+```html
+<span counter="1250" counter-sep counter-prefix="$" counter-suffix="k">0</span>
 ```
 
 ### Typewriter
@@ -207,64 +220,19 @@ That's it. Start using attributes immediately.
 </p>
 ```
 
-### Counter Animation
-```html
-<!-- Animates from 0 to 1,250 on scroll -->
-<span counter="1250" counter-sep counter-prefix="$" counter-suffix="k">0</span>
-```
-
-### Ripple & Spotlight
-```html
-<button ripple surface="solid" tone="primary">Ripple Effect</button>
-<div spotlight surface="matte">Spotlight follows your cursor</div>
-```
-
 ### Forms
 ```html
 <div field>
   <label>Email</label>
-  <input input type="email" placeholder="you@example.com" />
+  <input input type="email" placeholder="you@example.com"/>
   <span hint>We'll never share your email.</span>
 </div>
 
 <div field state="error">
   <label>Password</label>
-  <input input type="password" />
-  <span hint>Must be at least 8 characters.</span>
+  <input input type="password"/>
+  <span hint>Must be 8+ characters.</span>
 </div>
-```
-
-### Gradients & Text Gradients
-```html
-<div gradient="sunset" radius="xl" style="height:120px"></div>
-<h1 text="hero" text-gradient="ocean">Gradient Text</h1>
-```
-
-### Badges & Tooltips
-```html
-<span badge tone="primary">Primary</span>
-<span badge="dot" tone="success">Live</span>
-<span badge="counter" tone="danger">99+</span>
-
-<button tooltip="This is a tooltip">Hover me</button>
-<button tooltip="Tooltip below" tooltip-pos="bottom">Below</button>
-```
-
-### Theme Toggle
-```html
-<!-- Auto persists to localStorage -->
-<button theme-toggle>Toggle Theme</button>
-```
-
-### Cursor Trail
-```html
-<!-- Add to any parent element -->
-<body cursor-trail cursor-color="#6366f1">
-```
-
-### Custom Cursor
-```html
-<div custom-cursor></div>
 ```
 
 ---
@@ -278,14 +246,21 @@ Override any CSS variable to match your brand:
   --lux-primary:       #your-color;
   --lux-font-sans:     'Your Font', sans-serif;
   --lux-font-display:  'Your Display Font', sans-serif;
-  --lux-r-lg:          0.5rem;     /* border radius */
-  --lux-gap-md:        1.25rem;    /* spacing */
+  --lux-r-lg:          0.5rem;
+  --lux-gap-md:        1.25rem;
 }
 ```
 
-Or use seed color per element:
+Seed color per element:
 ```html
-<div seed="#e11d48" surface="neon">Seed colored surface</div>
+<div seed="#e11d48" surface="neon">Custom color surface</div>
+```
+
+Dark / Light mode:
+```html
+<html scheme="dark">   <!-- force dark -->
+<html scheme="light">  <!-- force light -->
+<button theme-toggle>Toggle</button>  <!-- auto persists to localStorage -->
 ```
 
 ---
@@ -294,13 +269,14 @@ Or use seed color per element:
 
 ```javascript
 // Toast
-Lux.toast("Message", { title: "Title", type: "success|danger|warning|info", duration: 3000 });
+Lux.toast('Message', { title: 'Title', type: 'success', duration: 3000 });
 
 // Confetti
-Lux.confetti({ count: 80, duration: 3000, origin: { x: 0.5, y: 0.4 } });
+Lux.confetti({ count: 80, origin: { x: 0.5, y: 0.4 } });
 
 // Theme
-Lux.applyScheme("dark" | "light");
+Lux.applyScheme('dark');
+Lux.applyScheme('light');
 
 // Modal
 Lux.openModal(backdropElement);
@@ -310,8 +286,8 @@ Lux.closeModal(backdropElement);
 Lux.openDrawer(backdropElement);
 Lux.closeDrawer(backdropElement);
 
-// Counter (manually trigger)
-Lux.animateCounter(element);
+// Re-init after dynamic content
+Lux.init();
 ```
 
 ---
@@ -320,14 +296,23 @@ Lux.animateCounter(element);
 
 | File | Size |
 |---|---|
-| `lux.css` | ~38 KB |
-| `lux.js` | ~14 KB |
-| **Total** | **~52 KB** |
+| `lux.css` | ~55 KB |
+| `lux.js` | ~32 KB |
+| `lux.d.ts` | ~8 KB |
+| **Total** | **~95 KB unpacked** |
 
-No dependencies. No build step. No runtime overhead.
+Zero dependencies. No build step required.
+
+---
+
+## 🗂 Full Docs
+
+See [FRAMEWORKS.md](./FRAMEWORKS.md) for detailed framework integration guides.
+
+See the [full documentation site](https://abideen-program.github.io/luxcss/docs.html) for live demos of every feature.
 
 ---
 
 ## License
 
-MIT © [Abideen Olafimihan] · [Documentation](https://abideen-program.github.io/luxcss/docs.html) · [npm](https://npmjs.com/package/luxcss) · [GitHub](https://github.com/abideen-program/luxcss)
+MIT © Abideen
