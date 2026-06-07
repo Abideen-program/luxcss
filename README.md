@@ -34,16 +34,44 @@ import 'luxcss/dist/lux.js';
 
 ### Next.js — App Router
 ```tsx
-// app/layout.tsx — add these two lines, done
+// app/layout.tsx
 import 'luxcss/dist/lux.css';
-import 'luxcss/dist/lux.js';
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head>
+        <script src="https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js" async />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
 ```
 
 ### Next.js — Pages Router
 ```tsx
-// pages/_app.tsx — add these two lines, done
+// pages/_app.tsx
 import 'luxcss/dist/lux.css';
-import 'luxcss/dist/lux.js';
+
+export default function App({ Component, pageProps }) {
+  return <Component {...pageProps} />;
+}
+```
+```tsx
+// pages/_document.tsx
+import { Html, Head, Main, NextScript } from 'next/document';
+
+export default function Document() {
+  return (
+    <Html lang="en">
+      <Head>
+        <script src="https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js" async />
+      </Head>
+      <body><Main /><NextScript /></body>
+    </Html>
+  );
+}
 ```
 
 ### Vue 3

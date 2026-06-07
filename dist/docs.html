@@ -874,35 +874,18 @@ code {
 }</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
 
           <h2>Next.js — App Router</h2>
-          <div class="callout warning"><span class="callout-icon">⚠</span><span>Lux uses browser APIs. Never import <code>lux.js</code> directly in a server component — use the <code>LuxProvider</code> below.</span></div>
-
-          <h3>Step 1 — Import CSS in layout</h3>
+          <div class="callout warning"><span class="callout-icon">⚠</span><span>Next.js runs on the server first. Import <code>lux.css</code> normally, but load <code>lux.js</code> via a CDN <code>&lt;script&gt;</code> tag so it only runs in the browser.</span></div>
           <div class="code-wrap"><pre class="code-block"><span class="cmt">// app/layout.tsx</span>
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-
-          <h3>Step 2 — Create LuxProvider</h3>
-          <div class="code-wrap"><pre class="code-block"><span class="cmt">// components/LuxProvider.tsx</span>
-<span class="str">'use client'</span>;
-<span class="kw">import</span> { useEffect } <span class="kw">from</span> <span class="str">'react'</span>;
-
-<span class="kw">export default function</span> <span class="fn">LuxProvider</span>({ children }) {
-  <span class="fn">useEffect</span>(() => {
-    <span class="kw">import</span>(<span class="str">'luxcss/dist/lux.js'</span>);
-  }, []);
-  <span class="kw">return</span> &lt;&gt;{children}&lt;/&gt;;
-}</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-
-          <h3>Step 3 — Wrap your app</h3>
-          <div class="code-wrap"><pre class="code-block"><span class="cmt">// app/layout.tsx</span>
-<span class="kw">import</span> LuxProvider <span class="kw">from</span> <span class="str">'@/components/LuxProvider'</span>;
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>; <span class="cmt">// ✅ import CSS from npm</span>
 
 <span class="kw">export default function</span> <span class="fn">RootLayout</span>({ children }) {
   <span class="kw">return</span> (
     &lt;<span class="tag">html</span> <span class="attr">lang</span>=<span class="val">"en"</span>&gt;
-      &lt;<span class="tag">body</span>&gt;
-        &lt;<span class="tag">LuxProvider</span>&gt;{children}&lt;/<span class="tag">LuxProvider</span>&gt;
-      &lt;/<span class="tag">body</span>&gt;
+      &lt;<span class="tag">head</span>&gt;
+        <span class="cmt">{/* ✅ load JS via CDN — runs in browser only */}</span>
+        &lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="val">"https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"</span> <span class="attr">async</span> /&gt;
+      &lt;/<span class="tag">head</span>&gt;
+      &lt;<span class="tag">body</span>&gt;{children}&lt;/<span class="tag">body</span>&gt;
     &lt;/<span class="tag">html</span>&gt;
   );
 }</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
@@ -910,14 +893,25 @@ code {
           <h2>Next.js — Pages Router</h2>
           <div class="code-wrap"><pre class="code-block"><span class="cmt">// pages/_app.tsx</span>
 <span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
-<span class="kw">import</span> { useEffect } <span class="kw">from</span> <span class="str">'react'</span>;
 
 <span class="kw">export default function</span> <span class="fn">App</span>({ Component, pageProps }) {
-  <span class="fn">useEffect</span>(() => {
-    <span class="kw">import</span>(<span class="str">'luxcss/dist/lux.js'</span>);
-  }, []);
   <span class="kw">return</span> &lt;<span class="tag">Component</span> {...pageProps} /&gt;;
 }</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+          <div class="code-wrap"><pre class="code-block"><span class="cmt">// pages/_document.tsx</span>
+<span class="kw">import</span> { Html, Head, Main, NextScript } <span class="kw">from</span> <span class="str">'next/document'</span>;
+
+<span class="kw">export default function</span> <span class="fn">Document</span>() {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">Html</span> <span class="attr">lang</span>=<span class="val">"en"</span>&gt;
+      &lt;<span class="tag">Head</span>&gt;
+        &lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="val">"https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"</span> <span class="attr">async</span> /&gt;
+      &lt;/<span class="tag">Head</span>&gt;
+      &lt;<span class="tag">body</span>&gt;&lt;<span class="tag">Main</span> /&gt;&lt;<span class="tag">NextScript</span> /&gt;&lt;/<span class="tag">body</span>&gt;
+    &lt;/<span class="tag">Html</span>&gt;
+  );
+}</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+          <div class="callout info"><span class="callout-icon">ℹ</span><span><strong>Why the difference?</strong> Next.js runs your code on the server first — the server has no <code>window</code> or <code>document</code>, so importing <code>lux.js</code> directly crashes. Loading it as a <code>&lt;script&gt;</code> tag means it only runs in the browser. <code>lux.css</code> is safe to import anywhere since CSS has no executable code.</span></div>
 
           <h2>Vue 3</h2>
           <div class="code-wrap"><pre class="code-block"><span class="cmt">// src/main.js</span>
