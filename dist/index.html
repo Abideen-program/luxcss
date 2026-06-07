@@ -297,9 +297,10 @@
       <!-- Next.js -->
       <div tab-panel>
         <div class="code-block" style="margin-top:1rem">
-          <span class="cmt">// app/layout.tsx or pages/_app.tsx</span><br>
-          <span class="kw">import</span> <span class="val">'luxcss/dist/lux.css'</span>;<br>
-          <span class="kw">import</span> <span class="val">'luxcss/dist/lux.js'</span>;
+          <span class="cmt">// app/layout.tsx</span><br>
+          <span class="kw">import</span> <span class="val">'luxcss/dist/lux.css'</span>; <span class="cmt">// CSS from npm</span><br><br>
+          <span class="cmt">// load JS via CDN in &lt;head&gt; — runs in browser only</span><br>
+          &lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="val">"https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"</span> <span class="attr">async</span> /&gt;
         </div>
       </div>
 
