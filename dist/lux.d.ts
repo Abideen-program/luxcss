@@ -208,7 +208,7 @@ declare module 'react' {
   interface HTMLAttributes<T> {
     // Surfaces & Color
     surface?: LuxSurface;
-    tone?: LuxTone;
+    tone?: LuxTone | string;
     density?: LuxDensity;
     radius?: LuxRadius;
     seed?: string;
@@ -305,7 +305,7 @@ declare module 'react' {
     'drawer-open'?: string;
     'popover-trigger'?: boolean | string;
     'popover-panel'?: boolean | string;
-    progress?: LuxProgress;
+    progress?: LuxProgress | 'true' | string;
     'progress-bar'?: boolean | string;
     badge?: LuxBadge;
     tooltip?: string;
