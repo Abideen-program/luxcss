@@ -11,18 +11,9 @@
     "LICENSE"
   ],
   "keywords": [
-    "css",
-    "javascript",
-    "css-library",
-    "frontend",
-    "ui",
-    "design-system",
-    "zero-dependency",
-    "attributes",
-    "html",
-    "styling",
-    "nextjs",
-    "react"
+    "css", "javascript", "css-library", "frontend",
+    "ui", "design-system", "zero-dependency",
+    "attributes", "html", "styling", "nextjs", "react"
   ],
   "author": "Abideen",
   "license": "MIT",
@@ -36,7 +27,9 @@
   },
   "scripts": {
     "build": "echo 'No build step needed — dist/ is the source'",
-    "prepublishOnly": "npm run build"
+    "sync": "cp dist/lux.css docs/lux.css && cp dist/lux.js docs/lux.js && cp dist/lux.d.ts docs/lux.d.ts && cp dist/index.html docs/index.html && cp dist/docs.html docs/docs.html",
+    "prepublishOnly": "npm run sync",
+    "release": "npm run sync && git add . && git commit -m 'sync docs with dist' && npm version patch && npm publish --access public && git push && git push --tags"
   },
   "unpkg": "dist/lux.js",
   "jsdelivr": "dist/lux.js",
