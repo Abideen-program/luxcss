@@ -828,13 +828,27 @@ code {
 &lt;<span class="tag">slot</span> /&gt;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
 
           <h2>TypeScript</h2>
-          <p>Lux ships with full TypeScript declarations. All attributes are typed automatically — no extra config needed. Make sure your <code>tsconfig.json</code> includes:</p>
+          <p>Lux ships with full TypeScript declarations. To activate them in your project, create one file:</p>
+          <div class="code-wrap"><pre class="code-block"><span class="cmt">// src/types/lux.d.ts  ← create this file</span>
+<span class="kw">import</span> <span class="str">'luxcss'</span>;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+          <p>That's it — one file, one line. After that, every Lux attribute like <code>surface=</code>, <code>tone=</code>, <code>ripple</code>, <code>magnetic</code> will be fully typed across your entire project with no errors.</p>
+
+          <div class="callout tip"><span class="callout-icon">💡</span><span>You only need to create this file once per project. The location <code>src/types/lux.d.ts</code> works for Next.js, React, and any TypeScript project.</span></div>
+
+          <p>Also make sure your <code>tsconfig.json</code> includes the types folder:</p>
           <div class="code-wrap"><pre class="code-block">{
   <span class="str">"compilerOptions"</span>: {
-    <span class="str">"lib"</span>: [<span class="str">"dom"</span>, <span class="str">"dom.iterable"</span>, <span class="str">"esnext"</span>],
-    <span class="str">"jsx"</span>: <span class="str">"react-jsx"</span>
-  }
+    <span class="str">"lib"</span>: [<span class="str">"dom"</span>, <span class="str">"dom.iterable"</span>, <span class="str">"esnext"</span>]
+  },
+  <span class="str">"include"</span>: [
+    <span class="str">"next-env.d.ts"</span>,
+    <span class="str">"**/*.ts"</span>,
+    <span class="str">"**/*.tsx"</span>,
+    <span class="str">"src/types/**/*.d.ts"</span>  <span class="cmt">// ← add this line</span>
+  ]
 }</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+          <div class="callout info"><span class="callout-icon">ℹ</span><span>Without <code>lux.d.ts</code>, TypeScript will show red underlines on every Lux attribute. With it, everything is fully typed and your IDE will give you autocomplete too.</span></div>
 
         </div>
       </div>
