@@ -558,7 +558,7 @@ code {
       <button class="mobile-menu-btn" id="mobileMenuBtn" style="background:none;border:none;cursor:pointer;padding:0.25rem;color:var(--lux-fg)">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
-      <div class="docs-logo" id="docsLogoBtn" style="cursor:pointer" title="Home">✦ lux <span class="version-chip">v1.0.0</span></div>
+      <div class="docs-logo" id="docsLogoBtn" style="cursor:pointer" title="Home">✦ lux <span class="version-chip">v2.0.1</span></div>
     </div>
     <div class="docs-header-right">
       <div class="docs-search" id="searchTrigger">
@@ -717,17 +717,18 @@ code {
           <p>Three ways to use Lux — pick the one that fits your workflow.</p>
         </div>
         <div class="prose-section">
-          <h2>CDN (Recommended)</h2>
+
+          <h2>CDN — Plain HTML</h2>
           <p>Paste these two lines inside your <code>&lt;head&gt;</code> and you're done:</p>
           <div class="code-wrap">
             <pre class="code-block"><span class="cmt">&lt;!-- CSS --&gt;</span>
-&lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"https://unpkg.com/luxcss/dist/lux.css"</span>/&gt;
+&lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"https://cdn.jsdelivr.net/npm/luxcss/dist/lux.css"</span>/&gt;
 
-<span class="cmt">&lt;!-- JS (place before &lt;/body&gt;) --&gt;</span>
-&lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="val">"https://unpkg.com/luxcss/dist/lux.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;</pre>
+<span class="cmt">&lt;!-- JS --&gt;</span>
+&lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="val">"https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;</pre>
             <button class="copy-btn" onclick="copyCode(this)">copy</button>
           </div>
-          <div class="callout tip"><span class="callout-icon">💡</span><span>You can also use <code>jsdelivr.net/npm/luxcss</code> for a faster CDN alternative.</span></div>
+          <div class="callout tip"><span class="callout-icon">💡</span><span>That's it for plain HTML. No npm, no build step, no config. Start adding Lux attributes immediately.</span></div>
 
           <h2>npm</h2>
           <div class="code-wrap">
@@ -738,116 +739,12 @@ code {
 <span class="fn">pnpm</span> add luxcss</pre>
             <button class="copy-btn" onclick="copyCode(this)">copy</button>
           </div>
-          <p>Then import in your entry file:</p>
-          <div class="code-wrap">
-            <pre class="code-block"><span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;</pre>
-            <button class="copy-btn" onclick="copyCode(this)">copy</button>
-          </div>
+          <div class="callout info"><span class="callout-icon">ℹ</span><span>After installing, see the <strong>Framework Guides</strong> page for the correct setup for your framework — the import pattern differs between React/Vue/Svelte and Next.js.</span></div>
 
           <h2>Download</h2>
-          <p>Download <code>lux.css</code> and <code>lux.js</code> from the GitHub repo and host them yourself.</p>
+          <p>Download <code>lux.css</code> and <code>lux.js</code> from the <a href="https://github.com/Abideen-program/luxcss" style="color:var(--lux-primary)">GitHub repo</a> and host them yourself.</p>
           <div class="callout warning"><span class="callout-icon">⚠</span><span>Make sure <code>lux.js</code> loads <em>after</em> <code>lux.css</code> and after the DOM is ready. Placing the script before <code>&lt;/body&gt;</code> is the safest approach.</span></div>
 
-          <h2>Framework Usage</h2>
-          <p>Lux works in React, Next.js, Vue, Svelte, and any framework. Pick your setup below.</p>
-
-          <h3>React / Vite</h3>
-          <div class="code-wrap">
-            <pre class="code-block"><span class="cmt">// src/main.jsx or src/index.js</span>
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;</pre>
-            <button class="copy-btn" onclick="copyCode(this)">copy</button>
-          </div>
-          <p>Then use attributes on any JSX element:</p>
-          <div class="code-wrap">
-            <pre class="code-block"><span class="kw">export default function</span> <span class="fn">Card</span>() {
-  <span class="kw">return</span> (
-    &lt;<span class="tag">div</span> <span class="attr">surface</span>=<span class="val">"glass"</span> <span class="attr">radius</span>=<span class="val">"xl"</span> <span class="attr">motion</span>=<span class="val">"expressive"</span>&gt;
-      &lt;<span class="tag">h2</span> <span class="attr">text</span>=<span class="val">"heading"</span> <span class="attr">text-gradient</span>=<span class="val">"electric"</span>&gt;Hello Lux&lt;/<span class="tag">h2</span>&gt;
-      &lt;<span class="tag">button</span> <span class="attr">surface</span>=<span class="val">"solid"</span> <span class="attr">tone</span>=<span class="val">"primary"</span> <span class="attr">ripple</span> <span class="attr">magnetic</span>&gt;Click&lt;/<span class="tag">button</span>&gt;
-    &lt;/<span class="tag">div</span>&gt;
-  );
-}</pre>
-            <button class="copy-btn" onclick="copyCode(this)">copy</button>
-          </div>
-
-          <h3>Next.js — App Router</h3>
-          <div class="callout warning"><span class="callout-icon">⚠</span><span>Lux uses browser APIs — never import <code>lux.js</code> directly in a server component. Use the <code>LuxProvider</code> pattern below.</span></div>
-          <div class="code-wrap">
-            <pre class="code-block"><span class="cmt">// app/layout.tsx — import CSS here (safe on server)</span>
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;</pre>
-            <button class="copy-btn" onclick="copyCode(this)">copy</button>
-          </div>
-          <div class="code-wrap">
-            <pre class="code-block"><span class="cmt">// components/LuxProvider.tsx</span>
-<span class="str">'use client'</span>;
-<span class="kw">import</span> { useEffect } <span class="kw">from</span> <span class="str">'react'</span>;
-
-<span class="kw">export default function</span> <span class="fn">LuxProvider</span>({ children }) {
-  <span class="fn">useEffect</span>(() => {
-    <span class="kw">import</span>(<span class="str">'luxcss/dist/lux.js'</span>); <span class="cmt">// loads only on client</span>
-  }, []);
-  <span class="kw">return</span> &lt;&gt;{children}&lt;/&gt;;
-}</pre>
-            <button class="copy-btn" onclick="copyCode(this)">copy</button>
-          </div>
-          <div class="code-wrap">
-            <pre class="code-block"><span class="cmt">// app/layout.tsx — wrap your app</span>
-<span class="kw">import</span> LuxProvider <span class="kw">from</span> <span class="str">'@/components/LuxProvider'</span>;
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
-
-<span class="kw">export default function</span> <span class="fn">RootLayout</span>({ children }) {
-  <span class="kw">return</span> (
-    &lt;<span class="tag">html</span> <span class="attr">lang</span>=<span class="val">"en"</span>&gt;
-      &lt;<span class="tag">body</span>&gt;
-        &lt;<span class="tag">LuxProvider</span>&gt;{children}&lt;/<span class="tag">LuxProvider</span>&gt;
-      &lt;/<span class="tag">body</span>&gt;
-    &lt;/<span class="tag">html</span>&gt;
-  );
-}</pre>
-            <button class="copy-btn" onclick="copyCode(this)">copy</button>
-          </div>
-
-          <h3>Next.js — Pages Router</h3>
-          <div class="code-wrap">
-            <pre class="code-block"><span class="cmt">// pages/_app.tsx</span>
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
-<span class="kw">import</span> { useEffect } <span class="kw">from</span> <span class="str">'react'</span>;
-
-<span class="kw">export default function</span> <span class="fn">App</span>({ Component, pageProps }) {
-  <span class="fn">useEffect</span>(() => {
-    <span class="kw">import</span>(<span class="str">'luxcss/dist/lux.js'</span>);
-  }, []);
-  <span class="kw">return</span> &lt;<span class="tag">Component</span> {...pageProps} /&gt;;
-}</pre>
-            <button class="copy-btn" onclick="copyCode(this)">copy</button>
-          </div>
-
-          <h3>Vue 3</h3>
-          <div class="code-wrap">
-            <pre class="code-block"><span class="cmt">// src/main.js</span>
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;</pre>
-            <button class="copy-btn" onclick="copyCode(this)">copy</button>
-          </div>
-
-          <h3>SvelteKit</h3>
-          <div class="code-wrap">
-            <pre class="code-block"><span class="cmt">&lt;!-- src/routes/+layout.svelte --&gt;</span>
-&lt;<span class="tag">script</span>&gt;
-  <span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
-  <span class="kw">import</span> { browser } <span class="kw">from</span> <span class="str">'$app/environment'</span>;
-  <span class="kw">import</span> { onMount } <span class="kw">from</span> <span class="str">'svelte'</span>;
-  <span class="fn">onMount</span>(<span class="kw">async</span> () => {
-    <span class="kw">if</span> (browser) <span class="kw">await</span> <span class="kw">import</span>(<span class="str">'luxcss/dist/lux.js'</span>);
-  });
-&lt;/<span class="tag">script</span>&gt;
-&lt;<span class="tag">slot</span> /&gt;</pre>
-            <button class="copy-btn" onclick="copyCode(this)">copy</button>
-          </div>
-
-          <div class="callout tip"><span class="callout-icon">💡</span><span>Lux ships with full TypeScript declarations (<code>lux.d.ts</code>). All attributes like <code>surface=</code>, <code>tone=</code>, <code>ripple</code> are typed automatically — no extra config needed.</span></div>
         </div>
       </div>
 
@@ -938,99 +835,6 @@ code {
     <span class="str">"jsx"</span>: <span class="str">"react-jsx"</span>
   }
 }</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-
-        </div>
-      </div>
-
-      <!-- ══════════════════ FRAMEWORKS ══════════════════ -->
-      <div class="docs-page" id="page-frameworks">
-        <div class="page-hero">
-          <span class="section-eyebrow">Getting Started</span>
-          <h1>Framework Guides</h1>
-          <p>Two imports. Any framework. Just like Tailwind.</p>
-        </div>
-        <div class="prose-section">
-
-          <div class="callout tip"><span class="callout-icon">💡</span><span>No providers, no useEffect, no extra config. Just add the two imports to your entry file and start using attributes immediately.</span></div>
-
-          <h2>React / Vite</h2>
-          <div class="code-wrap"><pre class="code-block"><span class="cmt">// src/main.jsx</span>
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-
-          <h2>Next.js — App Router</h2>
-          <div class="code-wrap"><pre class="code-block"><span class="cmt">// app/layout.tsx</span>
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-
-          <div class="demo-box">
-            <div class="demo-preview stack" style="padding:1.5rem;gap:0.5rem">
-              <div style="font-size:0.78rem;opacity:0.5;font-family:var(--lux-font-mono)">app/layout.tsx</div>
-              <div class="code-block" style="margin:0;font-size:0.75rem">
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;
-<span class="kw">import</span> type { Metadata } <span class="kw">from</span> <span class="str">'next'</span>;
-
-<span class="kw">export const</span> metadata: Metadata = { title: <span class="str">'My App'</span> };
-
-<span class="kw">export default function</span> <span class="fn">RootLayout</span>({ children }) {
-  <span class="kw">return</span> (
-    &lt;<span class="tag">html</span> <span class="attr">lang</span>=<span class="val">"en"</span>&gt;
-      &lt;<span class="tag">body</span>&gt;{children}&lt;/<span class="tag">body</span>&gt;
-    &lt;/<span class="tag">html</span>&gt;
-  );
-}</div>
-            </div>
-            <div class="demo-label">Complete layout.tsx — nothing extra needed</div>
-          </div>
-
-          <h2>Next.js — Pages Router</h2>
-          <div class="code-wrap"><pre class="code-block"><span class="cmt">// pages/_app.tsx</span>
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;
-
-<span class="kw">export default function</span> <span class="fn">App</span>({ Component, pageProps }) {
-  <span class="kw">return</span> &lt;<span class="tag">Component</span> {...pageProps} /&gt;;
-}</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-
-          <h2>Vue 3</h2>
-          <div class="code-wrap"><pre class="code-block"><span class="cmt">// src/main.js</span>
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-
-          <h2>SvelteKit</h2>
-          <div class="code-wrap"><pre class="code-block"><span class="cmt">&lt;!-- src/routes/+layout.svelte --&gt;</span>
-&lt;<span class="tag">script</span>&gt;
-  <span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
-  <span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;
-&lt;/<span class="tag">script</span>&gt;
-&lt;<span class="tag">slot</span> /&gt;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-
-          <h2>Using Lux attributes in JSX</h2>
-          <p>Once imported, use any Lux attribute on any element:</p>
-          <div class="code-wrap"><pre class="code-block"><span class="kw">export default function</span> <span class="fn">Page</span>() {
-  <span class="kw">return</span> (
-    &lt;<span class="tag">div</span> <span class="attr">surface</span>=<span class="val">"glass"</span> <span class="attr">radius</span>=<span class="val">"xl"</span> <span class="attr">motion</span>=<span class="val">"expressive"</span>&gt;
-      &lt;<span class="tag">h1</span> <span class="attr">text</span>=<span class="val">"heading"</span> <span class="attr">text-gradient</span>=<span class="val">"electric"</span>&gt;Hello&lt;/<span class="tag">h1</span>&gt;
-      &lt;<span class="tag">button</span> <span class="attr">surface</span>=<span class="val">"solid"</span> <span class="attr">tone</span>=<span class="val">"primary"</span> <span class="attr">ripple</span> <span class="attr">magnetic</span>&gt;
-        Click me
-      &lt;/<span class="tag">button</span>&gt;
-    &lt;/<span class="tag">div</span>&gt;
-  );
-}</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-
-          <h2>TypeScript</h2>
-          <p>Lux ships with full TypeScript declarations — all attributes are typed automatically. If you see TypeScript errors, add this to your <code>tsconfig.json</code>:</p>
-          <div class="code-wrap"><pre class="code-block">{
-  <span class="str">"compilerOptions"</span>: {
-    <span class="str">"lib"</span>: [<span class="str">"dom"</span>, <span class="str">"dom.iterable"</span>, <span class="str">"esnext"</span>]
-  }
-}</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-
-          <h2>Using the JS API</h2>
-          <div class="code-wrap"><pre class="code-block"><span class="cmt">// In any client component</span>
-<span class="fn">window</span>.Lux.<span class="fn">toast</span>(<span class="str">'Saved!'</span>, { title: <span class="str">'Done'</span>, type: <span class="str">'success'</span> });
-<span class="fn">window</span>.Lux.<span class="fn">confetti</span>({ count: <span class="num">80</span> });</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
 
         </div>
       </div>
