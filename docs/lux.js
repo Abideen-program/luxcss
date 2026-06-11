@@ -1,18 +1,21 @@
 /*!
- * LUX — JavaScript Runtime v1.0.1
+ * LUX — JavaScript Runtime v2.0.3
  * Handles: reveal, accordion, tabs, modal, drawer, popover,
  *          toast, tilt, magnetic, confetti, cursor trail,
  *          counter animation, marquee, theme toggle,
  *          parallax, scroll progress, seed color, and more.
+ *
+ * ES Module — safe to import in Next.js, React, Vue, Svelte, Node.
+ * No top-level browser code. Everything runs inside initLux()
+ * which is called only when the DOM is ready in a browser.
  */
 
-// SSR safety — do nothing if running outside a browser (Next.js, SSR, Node)
-if (typeof window === 'undefined' || typeof document === 'undefined') {
-  if (typeof module !== 'undefined') module.exports = {};
-} else {
+function initLux() {
+  // Safety check — never run on server
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
-(function (global) {
-  "use strict";
+  (function (global) {
+    "use strict";
 
   /* ── Utilities ─────────────────────────────────────────────── */
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
@@ -909,15 +912,25 @@ if (typeof window === 'undefined' || typeof document === 'undefined') {
     },
   };
 
-  // Auto-init on DOM ready
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => Lux.init());
-  } else {
-    Lux.init();
-  }
-
-  // Expose globally
+  // Expose globally and run init immediately
+  // (initLux is only called once DOM is ready, see entry point below)
   global.Lux = Lux;
-})(window);
+  Lux.init();
+  })(window);
+}
 
-} // end SSR browser check
+// ── Entry point ───────────────────────────────────────────────
+// Called automatically in browser environments.
+// Safe to import in Next.js, Vite, or any SSR framework.
+if (typeof window !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLux);
+  } else {
+    initLux();
+  }
+}
+
+// ES module export — allows: import 'luxcss/dist/lux.js'
+// and also: import { Lux } from 'luxcss/dist/lux.js'
+export default initLux;
+export { initLux };

@@ -202,7 +202,7 @@
 
   <div layout="stack" align="center" gap="lg" style="position:relative;text-align:center;max-width:760px;padding:2rem;">
     <div reveal="scale">
-      <span badge="dot" tone="success" style="margin-bottom:1rem">v1.0.0 — Stable</span>
+      <span badge="dot" tone="success" style="margin-bottom:1rem">v2.0.3 — Stable</span>
     </div>
 
     <h1 text="hero" balance reveal="bottom" reveal-delay="100"
@@ -281,7 +281,7 @@
         <div class="code-block" style="margin-top:1rem">
           <span class="cmt">&lt;!-- Add to your &lt;head&gt; --&gt;</span><br>
           &lt;<span class="tag">link</span> <span class="attr">rel</span>=<span class="val">"stylesheet"</span> <span class="attr">href</span>=<span class="val">"https://cdn.jsdelivr.net/npm/luxcss/dist/lux.css"</span>&gt;<br>
-          &lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="val">"https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
+          &lt;<span class="tag">script</span> <span class="attr">type</span>=<span class="val">"module"</span> <span class="attr">src</span>=<span class="val">"https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"</span>&gt;&lt;/<span class="tag">script</span>&gt;
         </div>
       </div>
 
@@ -298,9 +298,8 @@
       <div tab-panel>
         <div class="code-block" style="margin-top:1rem">
           <span class="cmt">// app/layout.tsx</span><br>
-          <span class="kw">import</span> <span class="val">'luxcss/dist/lux.css'</span>; <span class="cmt">// CSS from npm</span><br><br>
-          <span class="cmt">// load JS via CDN in &lt;head&gt; — runs in browser only</span><br>
-          &lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="val">"https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"</span> <span class="attr">async</span> /&gt;
+          <span class="kw">import</span> <span class="val">'luxcss/dist/lux.css'</span>;<br>
+          <span class="kw">import</span> <span class="val">'luxcss/dist/lux.js'</span>;
         </div>
       </div>
 
@@ -807,7 +806,7 @@
 <!-- ── FOOTER ─────────────────────────────────────────────────── -->
 <footer style="border-top:1px solid var(--lux-border);padding:2rem;text-align:center;">
   <span text="caption">
-    ✦ Lux v1.0.0 — Built to outshine everything.
+    ✦ Lux v2.0.3 — Built to outshine everything.
     <a href="#" style="color:var(--lux-primary);text-decoration:none;margin-left:0.5rem">MIT License</a>
   </span>
 </footer>

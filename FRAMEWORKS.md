@@ -1,5 +1,17 @@
 # Lux Framework Guide
 
+Two imports. Any framework. As of v2.0.3, `lux.js` is a proper ES module — no CDN workarounds needed anywhere.
+
+---
+
+## React / Vite
+
+```js
+// src/main.jsx
+import 'luxcss/dist/lux.css';
+import 'luxcss/dist/lux.js';
+```
+
 ---
 
 ## Next.js — App Router
@@ -7,13 +19,11 @@
 ```tsx
 // app/layout.tsx
 import 'luxcss/dist/lux.css';
+import 'luxcss/dist/lux.js';
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <script src="https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js" async />
-      </head>
       <body>{children}</body>
     </html>
   );
@@ -27,39 +37,11 @@ export default function RootLayout({ children }) {
 ```tsx
 // pages/_app.tsx
 import 'luxcss/dist/lux.css';
+import 'luxcss/dist/lux.js';
 
 export default function App({ Component, pageProps }) {
   return <Component {...pageProps} />;
 }
-```
-
-```tsx
-// pages/_document.tsx
-import { Html, Head, Main, NextScript } from 'next/document';
-
-export default function Document() {
-  return (
-    <Html lang="en">
-      <Head>
-        <script src="https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js" async />
-      </Head>
-      <body>
-        <Main />
-        <NextScript />
-      </body>
-    </Html>
-  );
-}
-```
-
----
-
-## React / Vite
-
-```js
-// src/main.jsx
-import 'luxcss/dist/lux.css';
-import 'luxcss/dist/lux.js'; // safe — Vite only runs in browser
 ```
 
 ---
@@ -69,7 +51,7 @@ import 'luxcss/dist/lux.js'; // safe — Vite only runs in browser
 ```js
 // src/main.js
 import 'luxcss/dist/lux.css';
-import 'luxcss/dist/lux.js'; // safe — Vite only runs in browser
+import 'luxcss/dist/lux.js';
 ```
 
 ---
@@ -80,21 +62,10 @@ import 'luxcss/dist/lux.js'; // safe — Vite only runs in browser
 <!-- src/routes/+layout.svelte -->
 <script>
   import 'luxcss/dist/lux.css';
-  import 'luxcss/dist/lux.js'; // safe — Vite only runs in browser
+  import 'luxcss/dist/lux.js';
 </script>
 <slot />
 ```
-
----
-
-## Why Next.js is different
-
-Next.js runs your code on the **server first**. The server has no `window` or `document`, so importing `lux.js` directly crashes. The fix is simple:
-
-- `lux.css` → import normally (CSS is safe on server)
-- `lux.js` → load via CDN `<script>` tag (runs in browser only)
-
-React, Vue, and Svelte projects use Vite which only runs in the browser — so `import 'luxcss/dist/lux.js'` works fine there.
 
 ---
 
@@ -103,9 +74,9 @@ React, Vue, and Svelte projects use Vite which only runs in the browser — so `
 ```tsx
 export default function Card() {
   return (
-    <div {...{ surface: 'glass', radius: 'xl', motion: 'expressive' } as any}>
-      <h2 {...{ text: 'heading', 'text-gradient': 'electric' } as any}>Hello Lux</h2>
-      <button {...{ surface: 'solid', tone: 'primary', radius: 'full', ripple: 'true' } as any}>
+    <div surface="glass" radius="xl" motion="expressive">
+      <h2 text="heading" text-gradient="electric">Hello Lux</h2>
+      <button surface="solid" tone="primary" radius="full" ripple magnetic>
         Click me
       </button>
     </div>
@@ -117,15 +88,30 @@ export default function Card() {
 
 ## TypeScript
 
-Lux ships with full TypeScript declarations (`lux.d.ts`). If you see errors on Lux attributes, make sure your `tsconfig.json` includes:
+Lux ships with full TypeScript declarations. To activate them, create one file:
+
+```ts
+// src/types/lux.d.ts
+import 'luxcss';
+```
+
+Then make sure your `tsconfig.json` includes it:
 
 ```json
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"]
-  }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/types/**/*.d.ts"
+  ]
 }
 ```
+
+After that, every Lux attribute (`surface=`, `tone=`, `ripple`, `magnetic`, etc.) is fully typed with autocomplete — no `as any` needed anywhere.
 
 ---
 
@@ -144,5 +130,7 @@ window.Lux.applyScheme('dark');
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/luxcss/dist/lux.css"/>
-<script src="https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"></script>
 ```
+
+> **Note:** Since `lux.js` is now an ES module, the `<script>` tag needs `type="module"` when loaded via CDN.

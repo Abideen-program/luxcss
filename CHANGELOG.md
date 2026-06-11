@@ -7,7 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.0.3] — 2026-06-06
+## [2.0.3] — 2026-06-10
+
+### Changed — BREAKING (internal only, not for end users)
+- `lux.js` rewritten as a proper ES module with no top-level browser code
+- Removed `if (typeof window === 'undefined')` early-return wrapper that confused bundlers
+- `initLux()` is now the single entry point, called automatically in browsers
+
+### Fixed
+- **Major DX fix:** `lux.js` can now be imported directly in Next.js (App Router and Pages Router) — no CDN script tag, no `LuxProvider`, no `useEffect` workaround needed
+- CDN usage now requires `<script type="module">` since `lux.js` is an ES module
+
+### Added
+- `"module"` field in `package.json` for proper ESM resolution by bundlers
+
+---
+
+
 
 ### Changed
 - Simplified framework setup — now just two imports in any framework (React, Next.js, Vue, Svelte)

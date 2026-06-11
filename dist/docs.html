@@ -771,17 +771,14 @@ code {
 }</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
 
           <h2>Next.js — App Router</h2>
-          <div class="callout warning"><span class="callout-icon">⚠</span><span>Next.js runs on the server first. Import <code>lux.css</code> normally, but load <code>lux.js</code> via a CDN <code>&lt;script&gt;</code> tag so it only runs in the browser.</span></div>
+          <div class="callout tip"><span class="callout-icon">💡</span><span>As of v2.0.3, <code>lux.js</code> is a proper ES module — you can import it directly in Next.js without any CDN script tag or workaround.</span></div>
           <div class="code-wrap"><pre class="code-block"><span class="cmt">// app/layout.tsx</span>
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>; <span class="cmt">// ✅ import CSS from npm</span>
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;
 
 <span class="kw">export default function</span> <span class="fn">RootLayout</span>({ children }) {
   <span class="kw">return</span> (
     &lt;<span class="tag">html</span> <span class="attr">lang</span>=<span class="val">"en"</span>&gt;
-      &lt;<span class="tag">head</span>&gt;
-        <span class="cmt">{/* ✅ load JS via CDN — runs in browser only */}</span>
-        &lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="val">"https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"</span> <span class="attr">async</span> /&gt;
-      &lt;/<span class="tag">head</span>&gt;
       &lt;<span class="tag">body</span>&gt;{children}&lt;/<span class="tag">body</span>&gt;
     &lt;/<span class="tag">html</span>&gt;
   );
@@ -790,25 +787,11 @@ code {
           <h2>Next.js — Pages Router</h2>
           <div class="code-wrap"><pre class="code-block"><span class="cmt">// pages/_app.tsx</span>
 <span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;
 
 <span class="kw">export default function</span> <span class="fn">App</span>({ Component, pageProps }) {
   <span class="kw">return</span> &lt;<span class="tag">Component</span> {...pageProps} /&gt;;
 }</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-          <div class="code-wrap"><pre class="code-block"><span class="cmt">// pages/_document.tsx</span>
-<span class="kw">import</span> { Html, Head, Main, NextScript } <span class="kw">from</span> <span class="str">'next/document'</span>;
-
-<span class="kw">export default function</span> <span class="fn">Document</span>() {
-  <span class="kw">return</span> (
-    &lt;<span class="tag">Html</span> <span class="attr">lang</span>=<span class="val">"en"</span>&gt;
-      &lt;<span class="tag">Head</span>&gt;
-        &lt;<span class="tag">script</span> <span class="attr">src</span>=<span class="val">"https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"</span> <span class="attr">async</span> /&gt;
-      &lt;/<span class="tag">Head</span>&gt;
-      &lt;<span class="tag">body</span>&gt;&lt;<span class="tag">Main</span> /&gt;&lt;<span class="tag">NextScript</span> /&gt;&lt;/<span class="tag">body</span>&gt;
-    &lt;/<span class="tag">Html</span>&gt;
-  );
-}</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-
-          <div class="callout info"><span class="callout-icon">ℹ</span><span><strong>Why the difference?</strong> Next.js runs your code on the server first — the server has no <code>window</code> or <code>document</code>, so importing <code>lux.js</code> directly crashes. Loading it as a <code>&lt;script&gt;</code> tag means it only runs in the browser. <code>lux.css</code> is safe to import anywhere since CSS has no executable code.</span></div>
 
           <h2>Vue 3</h2>
           <div class="code-wrap"><pre class="code-block"><span class="cmt">// src/main.js</span>
@@ -828,13 +811,27 @@ code {
 &lt;<span class="tag">slot</span> /&gt;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
 
           <h2>TypeScript</h2>
-          <p>Lux ships with full TypeScript declarations. All attributes are typed automatically — no extra config needed. Make sure your <code>tsconfig.json</code> includes:</p>
+          <p>Lux ships with full TypeScript declarations. To activate them in your project, create one file:</p>
+          <div class="code-wrap"><pre class="code-block"><span class="cmt">// src/types/lux.d.ts  ← create this file</span>
+<span class="kw">import</span> <span class="str">'luxcss'</span>;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+          <p>That's it — one file, one line. After that, every Lux attribute like <code>surface=</code>, <code>tone=</code>, <code>ripple</code>, <code>magnetic</code> will be fully typed across your entire project with no errors.</p>
+
+          <div class="callout tip"><span class="callout-icon">💡</span><span>You only need to create this file once per project. The location <code>src/types/lux.d.ts</code> works for Next.js, React, and any TypeScript project.</span></div>
+
+          <p>Also make sure your <code>tsconfig.json</code> includes the types folder:</p>
           <div class="code-wrap"><pre class="code-block">{
   <span class="str">"compilerOptions"</span>: {
-    <span class="str">"lib"</span>: [<span class="str">"dom"</span>, <span class="str">"dom.iterable"</span>, <span class="str">"esnext"</span>],
-    <span class="str">"jsx"</span>: <span class="str">"react-jsx"</span>
-  }
+    <span class="str">"lib"</span>: [<span class="str">"dom"</span>, <span class="str">"dom.iterable"</span>, <span class="str">"esnext"</span>]
+  },
+  <span class="str">"include"</span>: [
+    <span class="str">"next-env.d.ts"</span>,
+    <span class="str">"**/*.ts"</span>,
+    <span class="str">"**/*.tsx"</span>,
+    <span class="str">"src/types/**/*.d.ts"</span>  <span class="cmt">// ← add this line</span>
+  ]
 }</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+          <div class="callout info"><span class="callout-icon">ℹ</span><span>Without <code>lux.d.ts</code>, TypeScript will show red underlines on every Lux attribute. With it, everything is fully typed and your IDE will give you autocomplete too.</span></div>
 
         </div>
       </div>
