@@ -1,7 +1,5 @@
 # Lux Framework Guide
 
-Two imports. Any framework. As of v2.0.3, `lux.js` is a proper ES module — no CDN workarounds needed anywhere.
-
 ---
 
 ## React / Vite
@@ -16,19 +14,41 @@ import 'luxcss/dist/lux.js';
 
 ## Next.js — App Router
 
+`app/layout.tsx` is a Server Component by default. Side-effect imports like `lux.js` only run on the server there — so use a tiny Client Component to load it in the browser.
+
+**Step 1 — Create LuxLoader**
+
+```tsx
+// src/components/LuxLoader.tsx
+'use client';
+
+import 'luxcss/dist/lux.js';
+
+export default function LuxLoader() {
+  return null;
+}
+```
+
+**Step 2 — Use it in your root layout**
+
 ```tsx
 // app/layout.tsx
 import 'luxcss/dist/lux.css';
-import 'luxcss/dist/lux.js';
+import LuxLoader from '@/components/LuxLoader';
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <LuxLoader />
+        {children}
+      </body>
     </html>
   );
 }
 ```
+
+> `lux.css` is safe to import directly in `layout.tsx` — CSS has no executable code so it works fine on the server. Only `lux.js` needs the Client Component wrapper.
 
 ---
 
@@ -43,6 +63,8 @@ export default function App({ Component, pageProps }) {
   return <Component {...pageProps} />;
 }
 ```
+
+> Pages Router doesn't have Server Components — `_app.tsx` runs entirely on the client, so the simple two-import pattern works directly. No `LuxLoader` needed.
 
 ---
 
@@ -62,7 +84,11 @@ import 'luxcss/dist/lux.js';
 <!-- src/routes/+layout.svelte -->
 <script>
   import 'luxcss/dist/lux.css';
-  import 'luxcss/dist/lux.js';
+  import { browser } from '$app/environment';
+  import { onMount } from 'svelte';
+  onMount(async () => {
+    if (browser) await import('luxcss/dist/lux.js');
+  });
 </script>
 <slot />
 ```
@@ -92,7 +118,7 @@ Lux ships with full TypeScript declarations. To activate them, create one file:
 
 ```ts
 // src/types/lux.d.ts
-import 'luxcss';
+/// <reference path="../../node_modules/luxcss/dist/lux.d.ts" />
 ```
 
 Then make sure your `tsconfig.json` includes it:
@@ -110,6 +136,8 @@ Then make sure your `tsconfig.json` includes it:
   ]
 }
 ```
+
+> The triple-slash reference is required — a plain `import 'luxcss'` does not reliably apply the type augmentation with modern bundler-mode TypeScript (TS 5.x + `moduleResolution: "bundler"`).
 
 After that, every Lux attribute (`surface=`, `tone=`, `ripple`, `magnetic`, etc.) is fully typed with autocomplete — no `as any` needed anywhere.
 
@@ -133,4 +161,4 @@ window.Lux.applyScheme('dark');
 <script type="module" src="https://cdn.jsdelivr.net/npm/luxcss/dist/lux.js"></script>
 ```
 
-> **Note:** Since `lux.js` is now an ES module, the `<script>` tag needs `type="module"` when loaded via CDN.
+> Since `lux.js` is an ES module, the `<script>` tag needs `type="module"` when loaded via CDN.
