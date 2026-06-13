@@ -1,6 +1,6 @@
 {
   "name": "luxcss",
-  "version": "2.0.3",
+  "version": "2.0.2",
   "description": "Attribute-first CSS & JS library. Style anything with one HTML attribute. Zero dependencies, no build step.",
   "main": "dist/lux.js",
   "module": "dist/lux.js",
@@ -36,6 +36,7 @@
   "jsdelivr": "dist/lux.js",
   "exports": {
     ".": {
+      "types": "./dist/lux.d.ts",
       "style": "./dist/lux.css",
       "browser": "./dist/lux.js",
       "default": "./dist/lux.js"
