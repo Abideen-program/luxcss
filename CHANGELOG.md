@@ -7,7 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [2.0.3] — 2026-06-10
+## [2.0.3] — 2026-06-11
+
+### Fixed — TypeScript declarations (`lux.d.ts`)
+- Removed duplicate property declarations: `'text-glow'` and `'elevation'` were each declared twice, silently breaking the entire React augmentation block
+- Fixed `cols`, `span`, `align`, `pattern` — these collided with native HTML attributes on `<textarea>`, `<col>`, and `<input>`. Now properly unioned with their native types (e.g. `cols?: LuxCols | number`)
+- Fixed `badge?: LuxBadge` to also accept `'true' | boolean` for shorthand usage like `badge="true"`
+- Fixed `magnetic?: string` to also accept `boolean` for shorthand usage like `magnetic`
+- Added `"types"` condition to `package.json` `exports["."]` — required for TypeScript's `moduleResolution: "bundler"` to find the declaration file at all
+
+### Added — Next.js App Router guidance
+- Documented the `LuxLoader` Client Component pattern, the correct way to load `lux.js` in `app/layout.tsx` (a Server Component)
+- Documented the triple-slash reference pattern for `src/types/lux.d.ts` — `import 'luxcss'` alone does not reliably trigger the type augmentation under TS 5.x + bundler resolution
+
+---
+
+
 
 ### Changed — BREAKING (internal only, not for end users)
 - `lux.js` rewritten as a proper ES module with no top-level browser code
