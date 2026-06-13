@@ -771,18 +771,35 @@ code {
 }</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
 
           <h2>Next.js — App Router</h2>
-          <div class="callout tip"><span class="callout-icon">💡</span><span>As of v2.0.3, <code>lux.js</code> is a proper ES module — you can import it directly in Next.js without any CDN script tag or workaround.</span></div>
-          <div class="code-wrap"><pre class="code-block"><span class="cmt">// app/layout.tsx</span>
-<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
+          <div class="callout warning"><span class="callout-icon">⚠</span><span><code>app/layout.tsx</code> is a Server Component by default. Side-effect imports like <code>lux.js</code> only run on the server there — so we use a tiny Client Component to load it in the browser.</span></div>
+
+          <h3>Step 1 — Create LuxLoader</h3>
+          <div class="code-wrap"><pre class="code-block"><span class="cmt">// src/components/LuxLoader.tsx</span>
+<span class="str">'use client'</span>;
+
 <span class="kw">import</span> <span class="str">'luxcss/dist/lux.js'</span>;
 
-<span class="kw">export default function</span> <span class="fn">RootLayout</span>({ children }) {
+<span class="kw">export default function</span> <span class="fn">LuxLoader</span>() {
+  <span class="kw">return</span> <span class="kw">null</span>;
+}</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+          <h3>Step 2 — Use it in your root layout</h3>
+          <div class="code-wrap"><pre class="code-block"><span class="cmt">// app/layout.tsx</span>
+<span class="kw">import</span> <span class="str">'luxcss/dist/lux.css'</span>;
+<span class="kw">import</span> LuxLoader <span class="kw">from</span> <span class="str">'@/components/LuxLoader'</span>;
+
+<span class="kw">export default function</span> <span class="fn">RootLayout</span>({ children }: { children: React.ReactNode }) {
   <span class="kw">return</span> (
     &lt;<span class="tag">html</span> <span class="attr">lang</span>=<span class="val">"en"</span>&gt;
-      &lt;<span class="tag">body</span>&gt;{children}&lt;/<span class="tag">body</span>&gt;
+      &lt;<span class="tag">body</span>&gt;
+        &lt;<span class="tag">LuxLoader</span> /&gt;
+        {children}
+      &lt;/<span class="tag">body</span>&gt;
     &lt;/<span class="tag">html</span>&gt;
   );
 }</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+
+          <div class="callout tip"><span class="callout-icon">💡</span><span><code>lux.css</code> is safe to import directly in <code>layout.tsx</code> — CSS has no executable code so it works fine on the server. Only <code>lux.js</code> needs the Client Component wrapper.</span></div>
 
           <h2>Next.js — Pages Router</h2>
           <div class="code-wrap"><pre class="code-block"><span class="cmt">// pages/_app.tsx</span>
@@ -792,6 +809,7 @@ code {
 <span class="kw">export default function</span> <span class="fn">App</span>({ Component, pageProps }) {
   <span class="kw">return</span> &lt;<span class="tag">Component</span> {...pageProps} /&gt;;
 }</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+          <div class="callout info"><span class="callout-icon">ℹ</span><span>Pages Router doesn't have Server Components — <code>_app.tsx</code> runs entirely on the client, so the simple two-import pattern works directly. No <code>LuxLoader</code> needed.</span></div>
 
           <h2>Vue 3</h2>
           <div class="code-wrap"><pre class="code-block"><span class="cmt">// src/main.js</span>
@@ -813,10 +831,10 @@ code {
           <h2>TypeScript</h2>
           <p>Lux ships with full TypeScript declarations. To activate them in your project, create one file:</p>
           <div class="code-wrap"><pre class="code-block"><span class="cmt">// src/types/lux.d.ts  ← create this file</span>
-<span class="kw">import</span> <span class="str">'luxcss'</span>;</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
-          <p>That's it — one file, one line. After that, every Lux attribute like <code>surface=</code>, <code>tone=</code>, <code>ripple</code>, <code>magnetic</code> will be fully typed across your entire project with no errors.</p>
+<span class="cmt">/// &lt;reference path="../../node_modules/luxcss/dist/lux.d.ts" /&gt;</span></pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
+          <p>That's it — one file, one line. After that, every Lux attribute like <code>surface=</code>, <code>tone=</code>, <code>ripple</code>, <code>magnetic</code> will be fully typed across your entire project with no errors and full autocomplete.</p>
 
-          <div class="callout tip"><span class="callout-icon">💡</span><span>You only need to create this file once per project. The location <code>src/types/lux.d.ts</code> works for Next.js, React, and any TypeScript project.</span></div>
+          <div class="callout tip"><span class="callout-icon">💡</span><span>You only need to create this file once per project. The triple-slash reference is required — a plain <code>import 'luxcss'</code> does not reliably apply the type augmentation with modern bundler-mode TypeScript.</span></div>
 
           <p>Also make sure your <code>tsconfig.json</code> includes the types folder:</p>
           <div class="code-wrap"><pre class="code-block">{
@@ -831,7 +849,7 @@ code {
   ]
 }</pre><button class="copy-btn" onclick="copyCode(this)">copy</button></div>
 
-          <div class="callout info"><span class="callout-icon">ℹ</span><span>Without <code>lux.d.ts</code>, TypeScript will show red underlines on every Lux attribute. With it, everything is fully typed and your IDE will give you autocomplete too.</span></div>
+          <div class="callout info"><span class="callout-icon">ℹ</span><span>Without this file, TypeScript will show red underlines on every Lux attribute. With it, everything is fully typed and your IDE gives you autocomplete too.</span></div>
 
         </div>
       </div>
