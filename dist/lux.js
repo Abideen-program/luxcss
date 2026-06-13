@@ -912,16 +912,16 @@ function initLux() {
     },
   };
 
-  // Expose globally and run init immediately
-  // (initLux is only called once DOM is ready, see entry point below)
+  // Expose globally and initialize
   global.Lux = Lux;
   Lux.init();
   })(window);
 }
 
 // ── Entry point ───────────────────────────────────────────────
-// Called automatically in browser environments.
-// Safe to import in Next.js, Vite, or any SSR framework.
+// Runs immediately on import in browser environments.
+// In Next.js/SSR, `window` is undefined during server render,
+// so this safely no-ops on the server and runs on the client.
 if (typeof window !== 'undefined') {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initLux);
@@ -929,8 +929,3 @@ if (typeof window !== 'undefined') {
     initLux();
   }
 }
-
-// ES module export — allows: import 'luxcss/dist/lux.js'
-// and also: import { Lux } from 'luxcss/dist/lux.js'
-export default initLux;
-export { initLux };
