@@ -33,19 +33,32 @@ import 'luxcss/dist/lux.js';
 ```
 
 ### Next.js — App Router
+`app/layout.tsx` is a Server Component, so `lux.js` needs a small Client Component wrapper:
+```tsx
+// src/components/LuxLoader.tsx
+'use client';
+import 'luxcss/dist/lux.js';
+export default function LuxLoader() {
+  return null;
+}
+```
 ```tsx
 // app/layout.tsx
 import 'luxcss/dist/lux.css';
-import 'luxcss/dist/lux.js';
+import LuxLoader from '@/components/LuxLoader';
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <LuxLoader />
+        {children}
+      </body>
     </html>
   );
 }
 ```
+See [FRAMEWORKS.md](./FRAMEWORKS.md) for the full explanation.
 
 ### Next.js — Pages Router
 ```tsx
@@ -57,6 +70,7 @@ export default function App({ Component, pageProps }) {
   return <Component {...pageProps} />;
 }
 ```
+No `LuxLoader` needed — Pages Router has no Server Components.
 
 ### Vue 3
 ```js
